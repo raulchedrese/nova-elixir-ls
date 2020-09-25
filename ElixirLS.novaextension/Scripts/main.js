@@ -14,6 +14,45 @@ exports.deactivate = function() {
     }
 }
 
+function rangeToLspRange(document, range) {
+  const fullContents = document.getTextInRange(new Range(0, document.length));
+  let chars = 0;
+  let startLspRange;
+  const lines = fullContents.split(document.eol);
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    const lineLength = lines[lineIndex].length + document.eol.length;
+    if (!startLspRange && chars + lineLength >= range.start) {
+      const character = range.start - chars;
+      startLspRange = { line: lineIndex, character };
+    }
+    if (startLspRange && chars + lineLength >= range.end) {
+      const character = range.end - chars;
+      return { line: lineIndex, character: character };
+    }
+    chars += lineLength;
+  }
+  return null;
+}
+
+function lspRangeToRange(document, range) {
+  const fullContents = document.getTextInRange(new Range(0, document.length));
+  let rangeStart = 0;
+  let rangeEnd = 0;
+  let chars = 0;
+  const lines = fullContents.split(document.eol);
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    const lineLength = lines[lineIndex].length + document.eol.length;
+    if (range.start.line === lineIndex) {
+      rangeStart = chars + range.start.character;
+    }
+    if (range.end.line === lineIndex) {
+      rangeEnd = chars + range.end.character;
+      break;
+    }
+    chars += lineLength;
+  }
+  return new Range(rangeStart, rangeEnd);
+}
 
 class ElixirLanguageServer {
     constructor() {
@@ -55,6 +94,25 @@ class ElixirLanguageServer {
             // Add the client to the subscriptions to be cleaned up
             nova.subscriptions.add(client);
             this.languageClient = client;
+
+
+            // Format on Save
+            nova.workspace.onDidAddTextEditor(editor => {
+              editor.onWillSave((editor) => {
+                client.sendRequest('textDocument/formatting', {
+                  textDocument: { uri: editor.document.uri },
+                  options: {}
+                }).then(result => {
+                  editor.edit((edit) => {
+                    result.map((r) => {
+                      edit.replace(lspRangeToRange(editor.document, r.range), r.newText);
+                    })
+                  });
+
+                });
+              })
+            })
+
         }
         catch (err) {
             // If the .start() method throws, it's likely because the path to the language server is invalid
