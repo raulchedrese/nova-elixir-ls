@@ -1,41 +1,45 @@
 {
-    "identifier": "raulchedrese.elixir-ls",
-    "name": "ElixirLS",
-    "organization": "Raul Chedrese",
-    "description": "Elixir support for Nova",
-    "version": "1.0",
-    "categories": ["languages"],
+  "identifier": "raulchedrese.elixir-ls",
+  "name": "ElixirLS",
+  "organization": "Raul Chedrese",
+  "description": "Elixir support for Nova",
+  "version": "1.0",
+  "categories": ["languages"],
 
-    "main": "main.js",
+  "main": "main.js",
 
-    "entitlements": {
-        "process": true,
-        "filesystem": "readonly"
-    },
+  "entitlements": {
+    "process": true,
+    "filesystem": "readonly"
+  },
 
-    "config": [
-        {
-            "key": "elixir-ls.language-server-path",
-            "title": "Language Server Path",
-            "type": "path",
-            "placeholder": "/usr/local/bin/example"
-        }
-    ],
-
-    "activationEvents": [
-        "onLanguage:elixir",
-        "onWorkspaceContains:mix.exs",
-    ],
-
-    "commands": {
-      "editor": [
-        {
-          "title": "Find References",
-          "command": "raulchedrese.elixir-ls.findReferences",
-          "filters": {
-            "syntaxes": ["elixir", "ex", "eex"]
-          }
-        },
-      ]
+  "config": [
+    {
+      "key": "elixir-ls.language-server-path",
+      "title": "Language Server Path",
+      "type": "path",
+      "placeholder": "/usr/local/bin/example"
     }
+  ],
+
+  "activationEvents": ["onLanguage:elixir", "onWorkspaceContains:mix.exs"],
+
+  "commands": {
+    "editor": [
+      {
+        "title": "Find References",
+        "command": "raulchedrese.elixir-ls.findReferences",
+        "filters": {
+          "syntaxes": ["elixir", "ex", "eex"]
+        }
+      },
+      {
+        "title": "Go to Definition",
+        "command": "raulchedrese.elixir-ls.goToDefinition",
+        "filters": {
+          "syntaxes": ["elixir", "ex", "eex"]
+        }
+      }
+    ]
+  }
 }

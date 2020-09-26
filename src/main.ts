@@ -1,4 +1,5 @@
 import { formattingCommand } from "./commands/formatting";
+import { goToDefinition } from "./commands/goToDefinition";
 
 let langClient = null;
 
@@ -47,6 +48,13 @@ const startServer = (path: string) => {
     // Add the client to the subscriptions to be cleaned up
     nova.subscriptions.add(client);
     langClient = client;
+
+    nova.commands.register(
+      "raulchedrese.elixir-ls.goToDefinition",
+      (editor) => {
+        goToDefinition(client, editor);
+      }
+    );
 
     // Format on Save
     nova.workspace.onDidAddTextEditor((editor) => {
