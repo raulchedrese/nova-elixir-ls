@@ -1,6 +1,5 @@
 Features:
   - Format code on save (working)
-  - Auto-completion (planned)
   - Debugger support (planned)
   - Dialyzer analysis (planned)
   - Reporting of build warnings and errors (planned)

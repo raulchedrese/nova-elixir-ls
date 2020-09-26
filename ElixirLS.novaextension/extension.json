@@ -1,5 +1,5 @@
 {
-    "identifier": "raulchedrese.ElixirLS",
+    "identifier": "raulchedrese.elixir-ls",
     "name": "ElixirLS",
     "organization": "Raul Chedrese",
     "description": "Elixir support for Nova",
@@ -25,5 +25,17 @@
     "activationEvents": [
         "onLanguage:elixir",
         "onWorkspaceContains:mix.exs",
-    ]
+    ],
+
+    "commands": {
+      "editor": [
+        {
+          "title": "Find References",
+          "command": "raulchedrese.elixir-ls.findReferences",
+          "filters": {
+            "syntaxes": ["elixir", "ex", "eex"]
+          }
+        },
+      ]
+    }
 }
