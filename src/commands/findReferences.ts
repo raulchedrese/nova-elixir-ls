@@ -1,4 +1,4 @@
-import { rangeToLspRange } from "../novaUtils";
+import { rangeToLspRange, lspRangeToRange } from "../novaUtils";
 import { folderPath } from "../uri";
 
 interface Location {
@@ -40,6 +40,7 @@ export const findReferences = (client, editor) => {
             const treeItem = new TreeItem(
               `${element.range.start.line}: ${selectedText}`
             );
+            treeItem.command = "raulchedrese.elixir-ls.showReferences";
             return treeItem;
           }
 
@@ -53,8 +54,26 @@ export const findReferences = (client, editor) => {
         },
       };
 
-      new TreeView("raulchedrese.elixir-ls.sidebar.results", {
+      const treeView = new TreeView("raulchedrese.elixir-ls.sidebar.results", {
         dataProvider,
+      });
+
+      nova.commands.register("raulchedrese.elixir-ls.showReferences", () => {
+        return Promise.all(
+          treeView.selection.map((selection) => {
+            if (typeof selection !== "string") {
+              nova.workspace.openFile(selection.uri).then((newEditor) => {
+                const range = lspRangeToRange(
+                  newEditor.document,
+                  selection.range
+                );
+
+                newEditor.addSelectionForRange(range);
+                newEditor.scrollToPosition(range.start);
+              });
+            }
+          })
+        );
       });
     });
 };

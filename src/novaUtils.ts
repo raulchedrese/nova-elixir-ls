@@ -18,7 +18,7 @@ export function rangeToLspRange(document: TextDocument, range: Range) {
   return null;
 }
 
-export function lspRangeToRange(document: TextDocument, range) {
+export function lspRangeToRange(document: TextDocument, range): Range {
   const fullContents = document.getTextInRange(new Range(0, document.length));
   let rangeStart = 0;
   let rangeEnd = 0;
