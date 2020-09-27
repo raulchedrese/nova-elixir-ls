@@ -1,5 +1,10 @@
 import { rangeToLspRange, lspRangeToRange } from "../novaUtils";
-import { createLocationSearchResultsTree } from "../searchResults";
+import { folderPath } from "../uri";
+
+interface Location {
+  uri: string;
+  range: [number, number];
+}
 
 export const findReferences = (client, editor) => {
   const selectedRange = editor.selectedRange;
@@ -11,15 +16,20 @@ export const findReferences = (client, editor) => {
       position: rangeToLspRange(editor.document, selectedRange),
       context: { includeDeclaration: false },
     })
-    .then((result) => {
+    .then((result: Location[]) => {
       const dataProvider = {
         getChildren(element) {
           console.log(element);
-          return result.map((r) => r.uri);
+          return result.map((r) => r);
         },
-        getTreeItem(element) {
-          console.log(element);
-          return new TreeItem(element);
+        getTreeItem(element: Location) {
+          const treeItem = new TreeItem(element.uri.split("/").pop());
+          treeItem.path = element.uri;
+          treeItem.descriptiveText = folderPath(
+            element.uri,
+            nova.workspace.path
+          );
+          return treeItem;
         },
       };
 
@@ -28,11 +38,5 @@ export const findReferences = (client, editor) => {
         dataProvider,
       });
       compositeDisposable.add(treeView);
-
-      // createLocationSearchResultsTree(selectedText, result);
-      // Open file
-      result.map((r) => {
-        console.log(Object.getOwnPropertyNames(r));
-      });
     });
 };
