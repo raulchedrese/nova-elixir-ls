@@ -1,9 +1,12 @@
-import { rangeToLspRange, lspRangeToRange } from "../novaUtils";
+import { rangeToLspRange } from "../novaUtils";
 import { folderPath } from "../uri";
 
 interface Location {
   uri: string;
-  range: [number, number];
+  range: {
+    start: { line: number; character: number };
+    end: { line: number; character: number };
+  };
 }
 
 export const findReferences = (client, editor) => {
@@ -17,26 +20,41 @@ export const findReferences = (client, editor) => {
       context: { includeDeclaration: false },
     })
     .then((result: Location[]) => {
+      const locationsByPath = result.reduce((acc, location) => {
+        if (!acc[location.uri]) {
+          acc[location.uri] = [];
+        }
+        acc[location.uri].push(location);
+        return acc;
+      }, {});
+
       const dataProvider = {
-        getChildren(element) {
-          console.log(element);
-          return result.map((r) => r);
+        getChildren(element: string | null): Location[] | string[] {
+          if (element === null) {
+            return Object.keys(locationsByPath);
+          }
+          return locationsByPath[element];
         },
-        getTreeItem(element: Location) {
-          const treeItem = new TreeItem(element.uri.split("/").pop());
-          treeItem.path = element.uri;
-          treeItem.descriptiveText = folderPath(
-            element.uri,
-            nova.workspace.path
+        getTreeItem(element: Location | string) {
+          if (typeof element !== "string") {
+            const treeItem = new TreeItem(
+              `${element.range.start.line}: ${selectedText}`
+            );
+            return treeItem;
+          }
+
+          const treeItem = new TreeItem(
+            element.split("/").pop(),
+            TreeItemCollapsibleState.Expanded
           );
+          treeItem.path = element;
+          treeItem.descriptiveText = folderPath(element, nova.workspace.path);
           return treeItem;
         },
       };
 
-      const compositeDisposable = new CompositeDisposable();
-      const treeView = new TreeView("raulchedrese.elixir-ls.sidebar.results", {
+      new TreeView("raulchedrese.elixir-ls.sidebar.results", {
         dataProvider,
       });
-      compositeDisposable.add(treeView);
     });
 };

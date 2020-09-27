@@ -1,4 +1,4 @@
-export const folderPath = (uri, workspacePath) => {
+export const folderPath = (uri: string, workspacePath: string) => {
   const workspaceRelativePath = uri.split(workspacePath).pop();
 
   // Remove the "/" from the start and the file name from the end.
