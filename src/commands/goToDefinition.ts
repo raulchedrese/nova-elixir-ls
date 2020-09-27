@@ -14,7 +14,7 @@ export const goToDefinition = (client, editor) => {
         const range = lspRangeToRange(newEditor.document, result.range);
 
         newEditor.addSelectionForRange(range);
-        newEditor.scrollToPosition(range[0]);
+        newEditor.scrollToPosition(range.start);
       });
     });
 };
