@@ -13,6 +13,8 @@
     "filesystem": "readonly"
   },
 
+  "activationEvents": ["onLanguage:elixir", "onWorkspaceContains:mix.exs"],
+
   "config": [
     {
       "key": "elixir-ls.language-server-path",
@@ -22,7 +24,18 @@
     }
   ],
 
-  "activationEvents": ["onLanguage:elixir", "onWorkspaceContains:mix.exs"],
+  "sidebars": [
+    {
+      "id": "raulchedrese.elixir-ls.sidebar",
+      "name": "Elixir",
+      "sections": [
+        {
+          "id": "raulchedrese.elixir-ls.sidebar.results",
+          "name": "Results"
+        }
+      ]
+    }
+  ],
 
   "commands": {
     "editor": [
@@ -30,14 +43,14 @@
         "title": "Find References",
         "command": "raulchedrese.elixir-ls.findReferences",
         "filters": {
-          "syntaxes": ["elixir", "ex", "eex"]
+          "syntaxes": ["elixir", "ex", "exs", "eex"]
         }
       },
       {
         "title": "Go to Definition",
         "command": "raulchedrese.elixir-ls.goToDefinition",
         "filters": {
-          "syntaxes": ["elixir", "ex", "eex"]
+          "syntaxes": ["elixir", "ex", "exs", "eex"]
         }
       }
     ]

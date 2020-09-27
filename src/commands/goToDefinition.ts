@@ -13,8 +13,8 @@ export const goToDefinition = (client, editor) => {
       nova.workspace.openFile(result.uri).then((newEditor) => {
         const range = lspRangeToRange(newEditor.document, result.range);
 
-        editor.addSelectionsForRange(range);
-        editor.scrollToPosition(range[0]);
+        newEditor.addSelectionForRange(range);
+        newEditor.scrollToPosition(range[0]);
       });
     });
 };

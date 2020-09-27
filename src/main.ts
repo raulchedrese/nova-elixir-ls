@@ -1,5 +1,6 @@
 import { formattingCommand } from "./commands/formatting";
 import { goToDefinition } from "./commands/goToDefinition";
+import { findReferences } from "./commands/findReferences";
 
 let langClient = null;
 
@@ -49,10 +50,19 @@ const startServer = (path: string) => {
     nova.subscriptions.add(client);
     langClient = client;
 
+    // Go to Definition
     nova.commands.register(
       "raulchedrese.elixir-ls.goToDefinition",
       (editor) => {
         goToDefinition(client, editor);
+      }
+    );
+
+    // Find References
+    nova.commands.register(
+      "raulchedrese.elixir-ls.findReferences",
+      (editor) => {
+        findReferences(client, editor);
       }
     );
 
