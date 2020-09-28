@@ -55,6 +55,12 @@ const startServer = (path: string) => {
     // Start the client
     client.start();
 
+    // Can be used to set custom `projectDir` or `mixEnv`. If we don't call this it sends
+    // a warning notification.
+    client.sendNotification("workspace/didChangeConfiguration", {
+      settings: {},
+    });
+
     // Add the client to the subscriptions to be cleaned up
     nova.subscriptions.add(client);
     langClient = client;
