@@ -3,11 +3,20 @@ import { goToDefinition } from "./commands/goToDefinition";
 import { findReferences } from "./commands/findReferences";
 
 let langClient = null;
+let config = {
+  formatOnSave: false,
+  serverPath: "",
+};
 
 export const activate = function () {
+  nova.config.observe("elixir-ls.format-on-save", function (isOn: boolean) {
+    config.formatOnSave = isOn;
+  });
+
   nova.config.observe("elixir-ls.language-server-path", function (
     path: string
   ) {
+    config.serverPath = path;
     startServer(path);
   });
 };
@@ -69,7 +78,7 @@ const startServer = (path: string) => {
     // Format on Save
     nova.workspace.onDidAddTextEditor((editor) => {
       editor.onWillSave((editor) => {
-        formattingCommand(client, editor);
+        config.formatOnSave && formattingCommand(client, editor);
       });
     });
   } catch (err) {
