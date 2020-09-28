@@ -84,7 +84,15 @@ const startServer = (path: string) => {
     // Format on Save
     nova.workspace.onDidAddTextEditor((editor) => {
       editor.onWillSave((editor) => {
-        config.formatOnSave && formattingCommand(client, editor);
+        if (config.formatOnSave) {
+          return formattingCommand(client, editor);
+        }
+      });
+
+      editor.onDidSave((editor) => {
+        client.sendNotification("textDocument/didSave", {
+          textDocument: { uri: editor.document.uri },
+        });
       });
     });
   } catch (err) {
