@@ -2,9 +2,11 @@
   "identifier": "raulchedrese.elixir-ls",
   "name": "ElixirLS",
   "organization": "Raul Chedrese",
-  "description": "Elixir support for Nova",
-  "version": "1.0",
+  "description": "Elixir Language Server support for Nova",
+  "version": "0.1.0",
   "categories": ["languages"],
+  "repository": "https://github.com/raulchedrese/nova-elixir-ls",
+  "bugs": "https://github.com/raulchedrese/nova-elixir-ls/issues",
 
   "main": "main.js",
 
@@ -21,6 +23,13 @@
       "title": "Language Server Path",
       "type": "path",
       "placeholder": "/usr/local/bin/example"
+    },
+    {
+      "key": "elixir-ls.format-on-save",
+      "title": "Format on save",
+      "description": "Automatically format a file on save",
+      "type": "boolean",
+      "default": true
     }
   ],
 
@@ -28,6 +37,8 @@
     {
       "id": "raulchedrese.elixir-ls.sidebar",
       "name": "Elixir",
+      "smallImage": "sidebarIconSmall",
+      "largeImage": "sidebarIconLarge",
       "sections": [
         {
           "id": "raulchedrese.elixir-ls.sidebar.results",
