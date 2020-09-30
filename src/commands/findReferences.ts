@@ -1,4 +1,4 @@
-import { rangeToLspRange, lspRangeToRange } from "../novaUtils";
+import { rangeToLspRange, jumpToRange } from "../novaUtils";
 import { folderPath } from "../uri";
 
 interface Location {
@@ -62,15 +62,7 @@ export const findReferences = (client, editor) => {
         return Promise.all(
           treeView.selection.map((selection) => {
             if (typeof selection !== "string") {
-              nova.workspace.openFile(selection.uri).then((newEditor) => {
-                const range = lspRangeToRange(
-                  newEditor.document,
-                  selection.range
-                );
-
-                newEditor.addSelectionForRange(range);
-                newEditor.scrollToPosition(range.start);
-              });
+              jumpToRange(nova.workspace, selection.uri, selection.range);
             }
           })
         );

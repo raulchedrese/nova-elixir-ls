@@ -37,3 +37,12 @@ export function lspRangeToRange(document: TextDocument, range): Range {
   }
   return new Range(rangeStart, rangeEnd);
 }
+
+export function jumpToRange(workspace, fileUri, targetRange) {
+  nova.workspace.openFile(fileUri).then((newEditor) => {
+    const range = lspRangeToRange(newEditor.document, targetRange);
+
+    newEditor.addSelectionForRange(range);
+    newEditor.scrollToPosition(range.start);
+  });
+}
