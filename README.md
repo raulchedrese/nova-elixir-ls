@@ -15,4 +15,4 @@ This extension adds advances support for Elixir features. It is powered by elixi
 
 ## Acknowledgements
 
-This project is heavily inspired by @apexskier's work on https://github.com/apexskier/nova-typescript
+This project is heavily inspired by https://github.com/apexskier/nova-typescript
