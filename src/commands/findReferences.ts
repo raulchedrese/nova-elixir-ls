@@ -1,5 +1,5 @@
 import { rangeToLspRange, jumpToRange } from "../novaUtils";
-import { folderPath } from "../uri";
+import { folderPath, fileName } from "../uri";
 
 interface Location {
   uri: string;
@@ -45,7 +45,7 @@ export const findReferences = (client, editor) => {
           }
 
           const treeItem = new TreeItem(
-            element.split("/").pop(),
+            fileName(element),
             TreeItemCollapsibleState.Expanded
           );
           treeItem.path = element;
