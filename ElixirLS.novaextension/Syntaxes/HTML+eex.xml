@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syntax name="html+eex">
+	<meta>
+		<name>HTML (Elixir)</name>
+		<type>markup</type>
+		<preferred-file-extension>html.eex</preferred-file-extension>
+		<parent>html</parent>
+	</meta>
+	
+	<detectors>
+		<extension priority="1.0">html.eex,html.leex</extension>
+	</detectors>
+	
+	<indentation>
+		<increase>
+			<expression>(?x)
+				&lt;(?!\?|(?:area|base|br|col|frame|hr|html|img|input|link|meta|param)\\b|[^&gt;]*/&gt;)
+				([-_\.A-Za-z0-9]+)(?=\s|&gt;)\b[^&gt;]*&gt;(?!.*&lt;/\1&gt;)
+				|&lt;!--(?!.*--&gt;)
+				|&lt;\?php.+?\b(if|else(?:if)?|for(?:each)?|while)\b.*:(?!.*end\2)
+				|\{[^}"']*$
+			</expression>
+		</increase>
+		<decrease>
+			<expression>(?x)
+				^\s*
+				(&lt;/(?!html)
+					[-_\.A-Za-z0-9]+\b[^>]*&gt;
+					|-->
+					|&lt;\?(php)?\s+(else(if)?|end(if|for(each)?|while)|\})
+					|\}
+				)</expression>
+		</decrease>
+	</indentation>
+	
+	<comments>
+		<multiline>
+			<starts-with>
+				<expression>&lt;!--</expression>
+			</starts-with>
+			<ends-with>
+				<expression>--&gt;</expression>
+			</ends-with>
+		</multiline>
+	</comments>
+	
+	<brackets>
+		<pair open="&lt;" close="&gt;" />
+	</brackets>
+	
+	<surrounding-pairs>
+		<pair open="&lt;" close="&gt;" />
+		<pair open="{" close="}" />
+		<pair open="[" close="]" />
+		<pair open="(" close=")" />
+		<pair open="&apos;" close="&apos;" />
+		<pair open="&quot;" close="&quot;" />
+		<pair open="`" close="`" />
+	</surrounding-pairs>
+	
+	<scopes>
+		<unknown spell-check="true" lookup="dictionary" />
+		
+		<include syntax="eex" collection="*" />
+		<include syntax="self" collection="html" />
+	</scopes>
+	
+	<infusions>
+		<!-- Infuses the entire HTML syntax into a new collection,
+			 prepending EEx's tags within each selector-matched scope -->
+		<infusion name="html" syntax="html">
+			<scopes action="insert-before-children" selector="html">
+				<include syntax="eex" collection="*" />
+			</scopes>
+		</infusion>
+	</infusions>
+</syntax>

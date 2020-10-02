@@ -15,4 +15,6 @@ This extension adds advances support for Elixir features. It is powered by elixi
 
 ## Acknowledgements
 
+Syntax highlighting and language completions are included from https://github.com/stollcri/elixir.novaextension with permission from the maintainer.
+
 This project is heavily inspired by @apexskier's work on https://github.com/apexskier/nova-typescript

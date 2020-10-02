@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syntax name="eex">
+	<meta>
+		<name>Embeded Elixir</name>
+		<type>markup</type>
+		<preferred-file-extension>eex</preferred-file-extension>
+	</meta>
+	
+	<detectors>
+		<extension priority="0.5">eex,leex</extension>
+		<match-content priority="0.5" lines="10">&lt;%.*?%&gt;</match-content>
+	</detectors>
+	
+	<comments>
+		<multiline>
+			<starts-with>
+				<expression>&lt;!--</expression>
+			</starts-with>
+			<ends-with>
+				<expression>--&gt;</expression>
+			</ends-with>
+		</multiline>
+	</comments>
+	
+	<scopes>
+		<unknown spell-check="true" lookup="dictionary" />
+		
+		<scope name="eex.line">
+			<starts-with>
+				<expression>^%</expression>
+			</starts-with>
+			<ends-with>
+				<expression>$</expression>
+			</ends-with>
+			<subscopes />
+		</scope>
+		<scope name="eex.comment">
+			<starts-with>
+				<expression>&lt;%\#</expression>
+			</starts-with>
+			<ends-with>
+				<expression>\#%&gt;</expression>
+			</ends-with>
+			<subscopes />
+		</scope>
+		<scope name="eex.variable">
+			<starts-with>
+				<expression>&lt;%=</expression>
+				<capture number="0" name="eex.tag.framework.variable.start" />
+			</starts-with>
+			<ends-with>
+				<expression>%&gt;</expression>
+				<capture number="0" name="eex.tag.framework.variable.end" />
+			</ends-with>
+			<subsyntax name="ruby">
+				<cut-off>
+					<expression>%&gt;</expression>
+				</cut-off>
+			</subsyntax>
+		</scope>
+		<scope name="eex.expression">
+			<starts-with>
+				<expression>&lt;%</expression>
+				<capture number="0" name="eex.tag.framework.expression.start" />
+			</starts-with>
+			<ends-with>
+				<expression>%&gt;</expression>
+				<capture number="0" name="eex.tag.framework.expression.end" />
+			</ends-with>
+			<subsyntax name="ruby">
+				<cut-off>
+					<expression>%&gt;</expression>
+				</cut-off>
+			</subsyntax>
+		</scope>
+	</scopes>
+	
+	<collections />
+</syntax>

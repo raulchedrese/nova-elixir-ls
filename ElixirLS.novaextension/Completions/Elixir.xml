@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<completions>
+    <!-- "foo" -->
+    <provider name="identifier">
+        <syntax>elixir</syntax>
+        <selector>*:not(string,comment)</selector>
+        <expression>(?&lt;!\.)\b[a-zA-Z_][a-zA-Z0-9_]*</expression>
+        
+        <symbols type="class">
+            <behavior prefix="=\s*">
+                <append>($[])</append>
+            </behavior>
+        </symbols>
+        <symbols type="function">
+            <behavior>
+                <arguments prefix="(" suffix=")" separator=", " />
+            </behavior>
+        </symbols>
+        <symbols type="constant,variable,argument" />
+        
+        <set>elixir.keywords</set>
+        <set>elixir.values.core</set>
+        <set>elixir.classes.core</set>
+        <set>elixir.modules.core</set>
+        <set>elixir.methods.core</set>
+        <set>elixir.exceptions.core</set>
+    </provider>
+    
+    <!-- "def foo" -->
+    <provider name="method-define">
+        <syntax>elixir</syntax>
+        <selector>*:not(string,comment)</selector>
+        <expression>(?&lt;=(?:def\s))\b[a-zA-Z_][a-zA-Z0-9_]*</expression>
+        
+        <symbols type="method">
+            <behavior prefix="(?&lt;=def\s)">
+                <arguments prefix="(self" suffix=")" separator=", " prepend-separator="true" />
+            </behavior>
+            <behavior>
+                <arguments prefix="(" suffix=")" separator=", " />
+            </behavior>
+        </symbols>
+        
+        <set>elixir.methods.core</set>
+    </provider>
+    
+    <!-- ".foo" -->
+    <provider name="method-invoke">
+        <syntax>elixir</syntax>
+        <selector>*:not(string,comment)</selector>
+        <expression>(?&lt;=\.)\b[a-zA-Z_][a-zA-Z0-9_]*</expression>
+        
+        <symbols type="method">
+            <behavior>
+                <arguments prefix="(" suffix=")" separator=", " />
+            </behavior>
+        </symbols>
+        <symbols type="property" />
+        
+        <set>elixir.methods.core</set>
+    </provider>
+    
+    <!-- Keywords -->
+    <set name="elixir.keywords" symbol="statement">
+		<!-- reserved words -->
+        <completion string="when">
+            <behavior>
+                <append> $[expression]</append>
+            </behavior>
+        </completion>
+        <completion string="and">
+            <behavior>
+                    <append> $[expression]</append>
+                </behavior>
+            </completion>
+        <completion string="or">
+            <behavior>
+                <append> $[expression]</append>
+            </behavior>
+        </completion>
+        <completion string="not">
+            <behavior>
+                <append> $[expression]</append>
+            </behavior>
+        </completion>
+        <completion string="in">
+            <behavior>
+                <append> $[container]</append>
+            </behavior>
+        </completion>
+        <completion string="fn" />
+        <completion string="do" />
+        <completion string="end" />
+        <completion string="catch">
+            <behavior>
+                <append> $[Exception]</append>
+            </behavior>
+        </completion>
+        <completion string="rescue">
+            <behavior>
+                <append> $[Exception]</append>
+            </behavior>
+        </completion>
+        <completion string="after" />
+        <completion string="else" />
+
+        <!-- definitions -->
+		<completion string="def">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+		<completion string="defcallback">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+        <completion string="defdelegate">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+		<completion string="defexception">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+		<completion string="defimpl">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+		<completion string="defmacro">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+		<completion string="defmacrop">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+		<completion string="defmodule">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+		<completion string="defp">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+		<completion string="defprotocol">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+        <completion string="defstruct">
+            <behavior>
+                <append> $[name] do</append>
+            </behavior>
+        </completion>
+
+        <!-- testing -->
+        <completion string="describe">
+            <behavior>
+                <append> "$[name]" do</append>
+            </behavior>
+        </completion>
+        <completion string="test">
+            <behavior>
+                <append> "$[description]" do</append>
+            </behavior>
+        </completion>
+        <completion string="assert">
+            <behavior>
+                <append> $[value] == $[value]</append>
+            </behavior>
+        </completion>
+
+        <!-- other -->
+        <completion string="alias">
+            <behavior>
+                <append> "$[name]"</append>
+            </behavior>
+        </completion>
+        <completion string="import">
+            <behavior>
+                <append> "$[name]"</append>
+            </behavior>
+        </completion>
+        <completion string="use">
+            <behavior>
+                <append> "$[name]"</append>
+            </behavior>
+        </completion>
+    </set>
+    
+    <!-- Built-in values -->
+    <set name="elixir.values.core" symbol="constant">
+        <completion string="true" />
+        <completion string="false" />
+        <completion string="nil" />
+    </set>
+    
+    <!-- Built-in classes -->
+    <set name="elixir.classes.core" symbol="class">
+		<!-- Basic Types -->
+        <completion string="Atom" />
+        <completion string="Base" />
+        <completion string="Bitwise" />
+        <completion string="Date" />
+        <completion string="DateTime" />
+        <completion string="Exception" />
+        <completion string="Float" />
+        <completion string="Function" />
+        <completion string="Integer" />
+        <completion string="Module" />
+        <completion string="Record" />
+        <completion string="Regex" />
+        <completion string="String" />
+        <completion string="Time" />
+        <completion string="Tuple" />
+        <completion string="URI" />
+        <completion string="Version" />
+        <!-- Collections and Enumerables -->
+        <completion string="Access" />
+        <completion string="Date.Range" />
+        <completion string="Enum" />
+        <completion string="Keyword" />
+        <completion string="List" />
+        <completion string="Map" />
+        <completion string="MapSet" />
+        <completion string="Range" />
+        <completion string="Stream" />
+        <!-- IO and System -->
+        <completion string="File" />
+        <completion string="IO" />
+        <completion string="OptionParser" />
+        <completion string="Path" />
+        <completion string="Port" />
+        <completion string="StringIO" />
+        <completion string="System" />
+        <!-- Calendar -->
+        <completion string="Calendar" />
+        <!-- Processes and Applications -->
+        <completion string="Agent" />
+        <completion string="Application" />
+        <completion string="Config" />
+        <completion string="DynamicSupervisor" />
+        <completion string="GenServer" />
+        <completion string="Node" />
+        <completion string="Process" />
+        <completion string="Registry" />
+        <completion string="Supervisor" />
+        <completion string="Task" />
+        <!-- Protocols -->
+        <completion string="Collectable" />
+        <completion string="Enumerable" />
+        <completion string="Inspect" />
+        <completion string="Protocol" />
+        <!-- Code and Macros -->
+        <completion string="Code" />
+        <completion string="Macro" />
+        
+        <!-- other -->
+        <completion string="Mix" />
+    </set>
+    
+    <!-- Built-in modules -->
+    <set name="elixir.modules.core" symbol="package">
+    </set>
+    
+    <!-- Built-in exceptions -->
+    <set name="elixir.exceptions.core" symbol="class">
+        <completion string="ArgumentError" />
+        <completion string="ArithmeticError" />
+        <completion string="BadArityError" />
+        <completion string="BadBooleanError" />
+        <completion string="BadFunctionError" />
+        <completion string="BadMapError" />
+        <completion string="BadStructError" />
+        <completion string="CaseClauseError" />
+        <completion string="Code.LoadError" />
+        <completion string="CompileError" />
+        <completion string="CondClauseError" />
+        <completion string="Enum.EmptyError" />
+        <completion string="Enum.OutOfBoundsError" />
+        <completion string="ErlangError" />
+        <completion string="File.CopyError" />
+        <completion string="File.Error" />
+        <completion string="File.LinkError" />
+        <completion string="File.RenameError" />
+        <completion string="FunctionClauseError" />
+        <completion string="IO.StreamError" />
+        <completion string="Inspect.Error" />
+        <completion string="KeyError" />
+        <completion string="MatchError" />
+        <completion string="OptionParser.ParseError" />
+        <completion string="Protocol.UndefinedError" />
+        <completion string="Regex.CompileError" />
+        <completion string="RuntimeError" />
+        <completion string="SyntaxError" />
+        <completion string="SystemLimitError" />
+        <completion string="TokenMissingError" />
+    </set>
+</completions>
