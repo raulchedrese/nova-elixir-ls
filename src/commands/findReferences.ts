@@ -1,13 +1,6 @@
 import { rangeToLspRange, jumpToRange } from "../novaUtils";
 import { folderPath, fileName } from "../uri";
-
-interface Location {
-  uri: string;
-  range: {
-    start: { line: number; character: number };
-    end: { line: number; character: number };
-  };
-}
+import type * as lspTypes from "vscode-languageserver-protocol";
 
 export const findReferences = (client, editor) => {
   const selectedRange = editor.selectedRange;
@@ -19,7 +12,7 @@ export const findReferences = (client, editor) => {
       position: rangeToLspRange(editor.document, selectedRange),
       context: { includeDeclaration: false },
     })
-    .then((result: Location[]) => {
+    .then((result: lspTypes.Location[]) => {
       const locationsByPath = result.reduce((acc, location) => {
         if (!acc[location.uri]) {
           acc[location.uri] = [];
@@ -29,13 +22,13 @@ export const findReferences = (client, editor) => {
       }, {});
 
       const dataProvider = {
-        getChildren(element: string | null): Location[] | string[] {
+        getChildren(element: string | null): lspTypes.Location[] | string[] {
           if (element === null) {
             return Object.keys(locationsByPath);
           }
           return locationsByPath[element];
         },
-        getTreeItem(element: Location | string) {
+        getTreeItem(element: lspTypes.Location | string) {
           if (typeof element !== "string") {
             const treeItem = new TreeItem(
               `${element.range.start.line}: ${selectedText}`

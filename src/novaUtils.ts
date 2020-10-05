@@ -1,3 +1,5 @@
+import type * as lspTypes from "vscode-languageserver-protocol";
+
 export function rangeToLspRange(document: TextDocument, range: Range) {
   const fullContents = document.getTextInRange(new Range(0, document.length));
   let chars = 0;
@@ -18,7 +20,10 @@ export function rangeToLspRange(document: TextDocument, range: Range) {
   return null;
 }
 
-export function lspRangeToRange(document: TextDocument, range): Range {
+export function lspRangeToRange(
+  document: TextDocument,
+  range: lspTypes.Range
+): Range {
   const fullContents = document.getTextInRange(new Range(0, document.length));
   let rangeStart = 0;
   let rangeEnd = 0;
@@ -38,7 +43,11 @@ export function lspRangeToRange(document: TextDocument, range): Range {
   return new Range(rangeStart, rangeEnd);
 }
 
-export function jumpToRange(workspace, fileUri, targetRange) {
+export function jumpToRange(
+  workspace,
+  fileUri: string,
+  targetRange: lspTypes.Range
+) {
   nova.workspace.openFile(fileUri).then((newEditor) => {
     const range = lspRangeToRange(newEditor.document, targetRange);
 
