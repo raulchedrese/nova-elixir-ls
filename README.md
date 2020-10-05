@@ -1,6 +1,6 @@
 # Elixir Language Server for Nova
 
-This extension adds advances support for Elixir features. It is powered by elixir-ls. It is currently experimental and you are likely to encounter some bugs.
+This extension adds advanced support for Elixir features. It is powered by elixir-ls. It is currently experimental and you are likely to encounter some bugs.
 
 ## Current Features:
 
