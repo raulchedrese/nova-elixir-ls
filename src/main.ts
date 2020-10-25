@@ -66,12 +66,12 @@ const startServer = (path: string) => {
     langClient = client;
 
     // Go to Definition
-    nova.commands.register(
-      "raulchedrese.elixir-ls.goToDefinition",
-      (editor) => {
-        goToDefinition(client, editor);
-      }
-    );
+    // nova.commands.register(
+    //   "raulchedrese.elixir-ls.goToDefinition",
+    //   (editor) => {
+    //     goToDefinition(client, editor);
+    //   }
+    // );
 
     // Find References
     nova.commands.register(
