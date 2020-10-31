@@ -15,7 +15,7 @@
     "filesystem": "readonly"
   },
 
-  "activationEvents": ["onLanguage:elixir", "onWorkspaceContains:mix.exs"],
+  "activationEvents": ["onLanguage:elixir"],
 
   "config": [
     {
@@ -53,13 +53,6 @@
       {
         "title": "Find References",
         "command": "raulchedrese.elixir-ls.findReferences",
-        "filters": {
-          "syntaxes": ["elixir", "ex", "exs", "eex"]
-        }
-      },
-      {
-        "title": "Go to Definition",
-        "command": "raulchedrese.elixir-ls.goToDefinition",
         "filters": {
           "syntaxes": ["elixir", "ex", "exs", "eex"]
         }

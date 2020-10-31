@@ -1,6 +1,6 @@
 import { rangeToLspRange, jumpToRange } from "../novaUtils";
 
-export const goToDefinition = (client, editor) => {
+export const goToDefinition = (client: LanguageClient, editor: TextEditor) => {
   const selectedRange = editor.selectedRange;
 
   client

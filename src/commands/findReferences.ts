@@ -51,6 +51,12 @@ export const findReferences = (client, editor) => {
         dataProvider,
       });
 
+      if (!treeView.visible) {
+        nova.workspace.showInformativeMessage(
+          "Done! View the Elixir sidebar to see results."
+        );
+      }
+
       nova.commands.register("raulchedrese.elixir-ls.showReferences", () => {
         return Promise.all(
           treeView.selection.map((selection) => {

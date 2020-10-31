@@ -1,15 +1,25 @@
 import { lspRangeToRange } from "../novaUtils";
+import type * as lspTypes from "vscode-languageserver-protocol";
 
-export const formattingCommand = (client, editor) => {
+interface LSPFormattingResult {
+  newText: string;
+  range: lspTypes.Range;
+}
+
+export const formattingCommand = (
+  client: LanguageClient,
+  editor: TextEditor
+) => {
   return client
     .sendRequest("textDocument/formatting", {
       textDocument: { uri: editor.document.uri },
       options: {},
     })
-    .then((result) => {
+    .then((result: LSPFormattingResult[]) => {
       editor.edit((edit) => {
         result.map((r) => {
-          edit.replace(lspRangeToRange(editor.document, r.range), r.newText);
+          let novaRange = lspRangeToRange(editor.document, r.range);
+          edit.replace(novaRange, r.newText);
         });
       });
     });

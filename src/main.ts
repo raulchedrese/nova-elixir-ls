@@ -83,6 +83,7 @@ const startServer = (path: string) => {
 
     // Format on Save
     nova.workspace.onDidAddTextEditor((editor) => {
+      if (editor.document.syntax !== "elixir") return;
       editor.onWillSave((editor) => {
         if (config.formatOnSave) {
           return formattingCommand(client, editor);
