@@ -65,14 +65,6 @@ const startServer = (path: string) => {
     nova.subscriptions.add(client);
     langClient = client;
 
-    // Go to Definition
-    // nova.commands.register(
-    //   "raulchedrese.elixir-ls.goToDefinition",
-    //   (editor) => {
-    //     goToDefinition(client, editor);
-    //   }
-    // );
-
     // Find References
     nova.commands.register(
       "raulchedrese.elixir-ls.findReferences",
@@ -88,12 +80,6 @@ const startServer = (path: string) => {
         if (config.formatOnSave) {
           return formattingCommand(client, editor);
         }
-      });
-
-      editor.onDidSave((editor) => {
-        client.sendNotification("textDocument/didSave", {
-          textDocument: { uri: editor.document.uri },
-        });
       });
     });
   } catch (err) {

@@ -15,7 +15,12 @@
     "filesystem": "readonly"
   },
 
-  "activationEvents": ["onLanguage:elixir"],
+  "activationEvents": [
+    "onWorkspaceContains:mix.exs",
+    "onLanguage:elixir",
+    "onLanguage:eex",
+    "onLanguage:html-eex"
+  ],
 
   "config": [
     {
