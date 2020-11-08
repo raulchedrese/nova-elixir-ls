@@ -34,7 +34,7 @@
       "title": "Format on save",
       "description": "Automatically format a file on save",
       "type": "boolean",
-      "default": true
+      "default": false
     }
   ],
 
