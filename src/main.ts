@@ -8,6 +8,14 @@ let config = {
   serverPath: "",
 };
 
+const makeServerExecutable = () => {
+  const process = new Process("/usr/bin/env", {
+    args: ["chmod", "u+x", nova.path.join(nova.extension.path, "elixir-ls-release/language_server.sh")],
+    cwd: nova.extension.path
+  });
+  process.start();
+}
+
 export const activate = function () {
   nova.config.observe("elixir-ls.format-on-save", function (isOn: boolean) {
     config.formatOnSave = isOn;
@@ -31,6 +39,7 @@ const startServer = (path: string) => {
     nova.subscriptions.remove(langClient);
   }
 
+  makeServerExecutable();
   // Use the default server path
   if (!path) {
     path = nova.extension.path + "/elixir-ls-release/language_server.sh";
