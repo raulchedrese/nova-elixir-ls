@@ -3,6 +3,7 @@ import { goToDefinition } from "./commands/goToDefinition";
 import { findReferences } from "./commands/findReferences";
 
 let langClient = null;
+const mainDisposable = new CompositeDisposable();
 let config = {
   formatOnSave: false,
   serverPath: "",
@@ -80,11 +81,13 @@ const startServer = (path: string) => {
     // Start the client
     client.start();
 
-    client.onDidStop((err) => {
-      nova.workspace.showErrorMessage(
-        "Elixir Language Server stopped unexpectedly.\n Please report this error."
-      );
-    });
+    mainDisposable.add(
+      client.onDidStop((err) => {
+        nova.workspace.showErrorMessage(
+          "Elixir Language Server stopped unexpectedly.\n Please report this error."
+        );
+      })
+    );
 
     // Can be used to set custom `projectDir` or `mixEnv`. If we don't call this it sends
     // a warning notification.
@@ -110,14 +113,23 @@ const startServer = (path: string) => {
     );
 
     // Format on Save
-    nova.workspace.onDidAddTextEditor((editor) => {
-      if (editor.document.syntax !== "elixir") return;
-      editor.onWillSave((editor) => {
-        if (config.formatOnSave) {
-          return formattingCommand(client, editor);
-        }
-      });
-    });
+    mainDisposable.add(
+      nova.workspace.onDidAddTextEditor((editor) => {
+        if (editor.document.syntax !== "elixir") return;
+        const editorDisposable = new CompositeDisposable();
+        mainDisposable.add(
+          editor.onDidDestroy(() => editorDisposable.dispose())
+        );
+
+        editorDisposable.add(
+          editor.onWillSave((editor) => {
+            if (config.formatOnSave) {
+              return formattingCommand(client, editor);
+            }
+          })
+        );
+      })
+    );
   } catch (err) {
     // If the .start() method throws, it's likely because the path to the language server is invalid
 
@@ -131,6 +143,7 @@ const stopServer = () => {
   if (langClient) {
     langClient.stop();
     nova.subscriptions.remove(langClient);
+    mainDisposable.dispose();
     langClient = null;
   }
 };
