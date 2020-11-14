@@ -34,6 +34,7 @@ const makeServerExecutable = () => {
 };
 
 export const activate = function () {
+  console.log("activating Elixir LS...");
   nova.config.observe("elixir-ls.format-on-save", function (isOn: boolean) {
     config.formatOnSave = isOn;
   });
@@ -83,8 +84,21 @@ const startServer = (path: string) => {
 
     mainDisposable.add(
       client.onDidStop((err) => {
-        nova.workspace.showErrorMessage(
-          "Elixir Language Server stopped unexpectedly.\n Please report this error."
+        let message =
+          "Elixir Language Server stopped unexpectedly.\n Please report this error.";
+
+        message += `\n\n ${err}`;
+
+        nova.workspace.showActionPanel(
+          message,
+          {
+            buttons: ["Restart", "Ignore"],
+          },
+          (index) => {
+            if (index == 0) {
+              nova.commands.invoke("raulchedrese.elixir-ls.restart");
+            }
+          }
         );
       })
     );
@@ -147,3 +161,11 @@ const stopServer = () => {
     langClient = null;
   }
 };
+
+const restart = () => {
+  stopServer();
+  console.log("restarting Elixir LS...");
+  startServer(config.serverPath);
+};
+
+nova.commands.register("raulchedrese.elixir-ls.restart", restart);

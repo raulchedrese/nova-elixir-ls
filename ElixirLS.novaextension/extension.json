@@ -54,6 +54,12 @@
   ],
 
   "commands": {
+    "extensions": [
+      {
+        "title": "Restart Server",
+        "command": "raulchedrese.elixir-ls.restart"
+      }
+    ],
     "editor": [
       {
         "title": "Find References",
