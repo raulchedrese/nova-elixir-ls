@@ -1,36 +1,14 @@
 import { formattingCommand } from "./commands/formatting";
-import { goToDefinition } from "./commands/goToDefinition";
 import { findReferences } from "./commands/findReferences";
+import handleStop from "./handlers/handleStop";
+import handleAddTextEditor from "./handlers/handleAddTextEditor";
+import { makeServerExecutable } from "./novaUtils";
 
 let langClient = null;
 const mainDisposable = new CompositeDisposable();
 let config = {
   formatOnSave: false,
   serverPath: "",
-};
-
-const makeServerExecutable = () => {
-  const serverProcess = new Process("/usr/bin/env", {
-    args: [
-      "chmod",
-      "u+x",
-      nova.path.join(
-        nova.extension.path,
-        "elixir-ls-release/language_server.sh"
-      ),
-    ],
-    cwd: nova.extension.path,
-  });
-  const launchProcess = new Process("/usr/bin/env", {
-    args: [
-      "chmod",
-      "u+x",
-      nova.path.join(nova.extension.path, "elixir-ls-release/launch.sh"),
-    ],
-    cwd: nova.extension.path,
-  });
-  serverProcess.start();
-  launchProcess.start();
 };
 
 export const activate = function () {
@@ -82,26 +60,7 @@ const startServer = (path: string) => {
     // Start the client
     client.start();
 
-    mainDisposable.add(
-      client.onDidStop((err) => {
-        let message =
-          "Elixir Language Server stopped unexpectedly.\n Please report this error.";
-
-        message += `\n\n ${err}`;
-
-        nova.workspace.showActionPanel(
-          message,
-          {
-            buttons: ["Restart", "Ignore"],
-          },
-          (index) => {
-            if (index == 0) {
-              nova.commands.invoke("raulchedrese.elixir-ls.restart");
-            }
-          }
-        );
-      })
-    );
+    mainDisposable.add(client.onDidStop(handleStop()));
 
     // Can be used to set custom `projectDir` or `mixEnv`. If we don't call this it sends
     // a warning notification.
@@ -128,21 +87,9 @@ const startServer = (path: string) => {
 
     // Format on Save
     mainDisposable.add(
-      nova.workspace.onDidAddTextEditor((editor) => {
-        if (editor.document.syntax !== "elixir") return;
-        const editorDisposable = new CompositeDisposable();
-        mainDisposable.add(
-          editor.onDidDestroy(() => editorDisposable.dispose())
-        );
-
-        editorDisposable.add(
-          editor.onWillSave((editor) => {
-            if (config.formatOnSave) {
-              return formattingCommand(client, editor);
-            }
-          })
-        );
-      })
+      nova.workspace.onDidAddTextEditor(
+        handleAddTextEditor(mainDisposable, client, config)
+      )
     );
   } catch (err) {
     // If the .start() method throws, it's likely because the path to the language server is invalid
