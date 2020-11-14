@@ -10,16 +10,27 @@ let config = {
 
 const makeServerExecutable = () => {
   const serverProcess = new Process("/usr/bin/env", {
-    args: ["chmod", "u+x", nova.path.join(nova.extension.path, "elixir-ls-release/language_server.sh")],
-    cwd: nova.extension.path
+    args: [
+      "chmod",
+      "u+x",
+      nova.path.join(
+        nova.extension.path,
+        "elixir-ls-release/language_server.sh"
+      ),
+    ],
+    cwd: nova.extension.path,
   });
   const launchProcess = new Process("/usr/bin/env", {
-    args: ["chmod", "u+x", nova.path.join(nova.extension.path, "elixir-ls-release/launch.sh")],
-    cwd: nova.extension.path
+    args: [
+      "chmod",
+      "u+x",
+      nova.path.join(nova.extension.path, "elixir-ls-release/launch.sh"),
+    ],
+    cwd: nova.extension.path,
   });
   serverProcess.start();
   launchProcess.start();
-}
+};
 
 export const activate = function () {
   nova.config.observe("elixir-ls.format-on-save", function (isOn: boolean) {
@@ -69,15 +80,21 @@ const startServer = (path: string) => {
     // Start the client
     client.start();
 
+    client.onDidStop((err) => {
+      nova.workspace.showErrorMessage(
+        "Elixir Language Server stopped unexpectedly.\n Please report this error."
+      );
+    });
+
     // Can be used to set custom `projectDir` or `mixEnv`. If we don't call this it sends
     // a warning notification.
     client.sendNotification("workspace/didChangeConfiguration", {
       settings: {
-        "elixirLS": {
-            "dialyzerEnabled": true,
-            "dialyzerFormat": true
-        }
-      }
+        elixirLS: {
+          dialyzerEnabled: true,
+          dialyzerFormat: true,
+        },
+      },
     });
 
     // Add the client to the subscriptions to be cleaned up
