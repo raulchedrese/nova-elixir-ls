@@ -72,7 +72,12 @@ const startServer = (path: string) => {
     // Can be used to set custom `projectDir` or `mixEnv`. If we don't call this it sends
     // a warning notification.
     client.sendNotification("workspace/didChangeConfiguration", {
-      settings: {},
+      settings: {
+        "elixirLS": {
+            "dialyzerEnabled": true,
+            "dialyzerFormat": true
+        }
+      }
     });
 
     // Add the client to the subscriptions to be cleaned up
