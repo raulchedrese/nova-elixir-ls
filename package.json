@@ -11,7 +11,11 @@
     "@rollup/plugin-typescript": "^6.0.0",
     "@types/nova-editor-node": "^1.2.2",
     "rollup": "^2.28.2",
+    "tslib": "^2.0.3",
     "typescript": "^4.0.3",
     "vscode-languageserver-protocol": "^3.15.3"
+  },
+  "scripts": {
+    "build": "yarn run rollup -c"
   }
 }
