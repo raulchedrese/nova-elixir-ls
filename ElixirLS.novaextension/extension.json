@@ -3,7 +3,7 @@
   "name": "ElixirLS",
   "organization": "Raul Chedrese",
   "description": "Elixir Language Server support for Nova",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "categories": ["languages"],
   "repository": "https://github.com/raulchedrese/nova-elixir-ls",
   "bugs": "https://github.com/raulchedrese/nova-elixir-ls/issues",
@@ -35,6 +35,13 @@
       "description": "Automatically format a file on save",
       "type": "boolean",
       "default": false
+    },
+    {
+      "key": "elixir-ls.enable-language-server",
+      "title": "Enable Language Server",
+      "description": "Use the Elixir Language Server. This is required for many features.",
+      "type": "boolean",
+      "default": true
     }
   ],
 

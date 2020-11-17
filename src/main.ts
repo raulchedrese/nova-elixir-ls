@@ -1,13 +1,19 @@
-import { formattingCommand } from "./commands/formatting";
 import { findReferences } from "./commands/findReferences";
 import handleStop from "./handlers/handleStop";
 import handleAddTextEditor from "./handlers/handleAddTextEditor";
 import { makeServerExecutable } from "./novaUtils";
 
+interface Config {
+  formatOnSave: boolean;
+  enableLanguageServer: boolean;
+  serverPath: string;
+}
+
 let langClient = null;
 const mainDisposable = new CompositeDisposable();
 let config = {
   formatOnSave: false,
+  enableLanguageServer: true,
   serverPath: "",
 };
 
@@ -21,7 +27,13 @@ export const activate = function () {
     path: string
   ) {
     config.serverPath = path;
-    startServer(path);
+    startServer(config);
+  });
+
+  nova.config.observe("elixir-ls.enable-language-server", function (
+    enable: boolean
+  ) {
+    config.enableLanguageServer = enable;
   });
 };
 
@@ -29,21 +41,24 @@ export const deactivate = function () {
   stopServer();
 };
 
-const startServer = (path: string) => {
+const startServer = (config: Config) => {
   if (langClient) {
     langClient.stop();
     nova.subscriptions.remove(langClient);
   }
 
-  makeServerExecutable();
-  // Use the default server path
-  if (!path) {
-    path = nova.extension.path + "/elixir-ls-release/language_server.sh";
+  if (!config.enableLanguageServer) {
+    return;
   }
+
+  makeServerExecutable();
+
+  const defaultPath =
+    nova.extension.path + "/elixir-ls-release/language_server.sh";
 
   // Create the client
   const serverOptions = {
-    path: path,
+    path: config.serverPath ? config.serverPath : defaultPath,
   };
   const clientOptions = {
     // The set of document syntaxes for which the server is valid
@@ -112,7 +127,7 @@ const stopServer = () => {
 const restart = () => {
   stopServer();
   console.log("restarting Elixir LS...");
-  startServer(config.serverPath);
+  startServer(config);
 };
 
 nova.commands.register("raulchedrese.elixir-ls.restart", restart);

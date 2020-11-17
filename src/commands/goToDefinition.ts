@@ -8,7 +8,7 @@ export const goToDefinition = (client: LanguageClient, editor: TextEditor) => {
       textDocument: { uri: editor.document.uri },
       position: rangeToLspRange(editor.document, selectedRange),
     })
-    .then((result) => {
+    .then((result: any) => {
       jumpToRange(nova.workspace, result.uri, result.range);
     });
 };
