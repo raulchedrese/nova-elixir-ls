@@ -20,17 +20,18 @@ To do this, you need to execute the following commands.
 
 ```shell
 pwd # should look like /somewhere/on/your/drive/in/nova-elixir-ls
+# install necessary project dependencies
+yarn install # npm install
+
+# compile elixir-ls
 cd elixir-ls
 mix deps.get
 mix compile
 mix elixir_ls.release o- ../ElixirLS.novaextension/elixir-ls-release
 cd ...
-```
 
-Then copy the content of the folder 'src'.
-
-```shell
-cp -r src/ ElixirLS.novaextension/Scripts/
+# bundle nova extension
+yarn build # yarn run build
 ```
 
 Finally, you have to activate this extension. To do this, click on 'Activate Project as Extension' in the menu 'Extensions'.
