@@ -31,7 +31,6 @@
 	</comments>
 	
 	<brackets>
-		<pair open="%{" close="}" />
 		<pair open="{" close="}" />
 		<pair open="[" close="]" />
 		<pair open="(" close=")" />
@@ -39,7 +38,6 @@
 	</brackets>
 	
 	<surrounding-pairs>
-		<pair open="%{" close="}" />
 		<pair open="{" close="}" />
 		<pair open="[" close="]" />
 		<pair open="(" close=")" />
@@ -484,12 +482,33 @@
 			</scope>
 			
 			<scope name="elixir.value.map">
-				<symbol type="expression">
+				<symbol type="struct">
 					<context behavior="subtree" />
 				</symbol>
 				<starts-with>
 					<expression>\%\{</expression>
 					<capture number="0" name="elixir.bracket" />
+				</starts-with>
+				<ends-with>
+					<expression>\}</expression>
+					<capture number="0" name="elixir.bracket" />
+				</ends-with>
+				<subscopes>
+					<include syntax="self" collection="comments" />
+					<include syntax="self" collection="values" />
+					<include syntax="self" collection="identifiers" />
+					<include syntax="self" collection="syntax" />
+				</subscopes>
+			</scope>
+						
+			<scope name="elixir.value.struct">
+				<symbol type="struct">
+					<context behavior="subtree" />
+				</symbol>
+				<starts-with>
+					<expression>(\%[\w_]+)(\{)</expression>
+					<capture number="1" name="elixir.struct.identifier" />
+					<capture number="2" name="elixir.bracket" />
 				</starts-with>
 				<ends-with>
 					<expression>\}</expression>
