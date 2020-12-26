@@ -2,3 +2,4 @@ ElixirLS.novaextension/elixir-ls-release
 ElixirLS.novaextension/Scripts
 node_modules/
 .nova/
+.DS_Store

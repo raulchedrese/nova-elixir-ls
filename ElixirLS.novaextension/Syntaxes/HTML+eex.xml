@@ -62,16 +62,6 @@
 		<unknown spell-check="true" lookup="dictionary" />
 		
 		<include syntax="eex" collection="*" />
-		<include syntax="self" collection="html" />
+		<include syntax="html" />
 	</scopes>
-	
-	<infusions>
-		<!-- Infuses the entire HTML syntax into a new collection,
-			 prepending EEx's tags within each selector-matched scope -->
-		<infusion name="html" syntax="html">
-			<scopes action="insert-before-children" selector="html">
-				<include syntax="eex" collection="*" />
-			</scopes>
-		</infusion>
-	</infusions>
 </syntax>
