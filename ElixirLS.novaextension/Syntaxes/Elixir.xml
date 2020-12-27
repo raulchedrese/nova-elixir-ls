@@ -175,7 +175,7 @@
 					<context behavior="start" group="function" />
 				</symbol>
 				<starts-with>
-					<expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)</expression>
+					<expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*).*do</expression>
 					<capture number="1" name="elixir.keyword" />
 					<capture number="2" name="elixir.identifier.function.name" />
 				</starts-with>
