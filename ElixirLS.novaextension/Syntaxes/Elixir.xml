@@ -6,7 +6,7 @@
 		<preferred-file-extension>ex</preferred-file-extension>
 		<scriptable shebang="#!/usr/bin/env elixir" />
 	</meta>
-
+	
 	<detectors>
 		<extension priority="1.0">ex,exs</extension>
 		<filename priority="1.0">mix.lock</filename>
@@ -14,29 +14,29 @@
 		<match-content lines="5" priority="1.0">^#\s*vi:\s*(syntax|ft)=(elixir)\b</match-content>
 		<match-content lines="2" priority="0.7">\#\!.*?\belixir\b</match-content>
 	</detectors>
-
+	
 	<indentation>
 		<increase>
-			<expression>(^\s*(defmodule|def|defp|else|do)\b.*$)|(\{[^}\"']*$)|(\[[^\]\"']*$)|(\([^)\"']*$)</expression>
+			<expression>(^.*(do)$)|(^.*\-\&gt;$)|(^\s*(from).*,$)|(^.*\s=$)|(\{[^}\"']*$)|(\[[^\]\"']*$)|(\([^)\"']*$)</expression>
 		</increase>
 		<decrease>
-			<expression>(^\s*(else|end)\b)|(^\s*(\s*/\*.*\*/\s*)*[\}\]\)\\])</expression>
+			<expression>^\s*(\s*/\*.*\*/\s*)*[\}\]\)\\]</expression>
 		</decrease>
 	</indentation>
-
+	
 	<comments>
 		<single>
 			<expression>#</expression>
 		</single>
 	</comments>
-
+	
 	<brackets>
 		<pair open="{" close="}" />
 		<pair open="[" close="]" />
 		<pair open="(" close=")" />
 		<pair open="&lt;&lt;" close="&gt;&gt;" />
 	</brackets>
-
+	
 	<surrounding-pairs>
 		<pair open="{" close="}" />
 		<pair open="[" close="]" />
@@ -44,19 +44,19 @@
 		<pair open="&apos;" close="&apos;" />
 		<pair open="&quot;" close="&quot;" />
 	</surrounding-pairs>
-
+	
 	<symbols redefinition="within-construct">
 		<local scope="within-construct" />
-
+		
 		<documentation mode="before" match-multiple="comment" />
 		<documentation mode="after" match-multiple="comment" />
 	</symbols>
-
+	
 	<scopes>
 		<include syntax="self" collection="comments" />
 		<include syntax="self" collection="imports" />
 		<include syntax="self" collection="definitions" />
-
+		
 		<scope name="elixir.keyword">
 			<strings>
 				<!-- reserved words -->
@@ -102,12 +102,12 @@
 				<string>assert</string>
 			</strings>
 		</scope>
-
+		
 		<include syntax="self" collection="values" />
 		<include syntax="self" collection="identifiers" />
 		<include syntax="self" collection="syntax" />
 	</scopes>
-
+	
 	<collections>
 		<!-- Comments -->
 		<collection name="comments">
@@ -116,7 +116,7 @@
 				<capture number="1" name="elixir.comment.content" />
 			</scope>
 		</collection>
-
+		
 		<!-- Imports -->
 		<collection name="imports">
 			<scope name="elixir.import">
@@ -141,7 +141,7 @@
 				</subscopes>
 			</scope>
 		</collection>
-
+		
 		<!-- Definitions -->
 		<collection name="definitions">
 			<scope name="elixir.definition.property">
@@ -149,7 +149,7 @@
 				<expression>@!(moduledoc|doc)([a-zA-Z_][A-Za-z0-9_]*)\s*(.*)$</expression>
 				<capture number="2" name="elixir.identifier.property.name" />
 			</scope>
-
+			
 			<scope name="elixir.definition.local">
 				<symbol type="variable" scope="local" />
 				<expression>([a-zA-Z_][A-Za-z0-9_]*)\s*(\=)</expression>
@@ -169,16 +169,15 @@
 				<capture number="5" name="elixir.bracket" />
 				<capture number="6" name="elixir.keyword" />
 			</scope>
-
+			
 			<scope name="elixir.definition.function">
 				<symbol type="function">
 					<context behavior="start" group="function" />
 				</symbol>
 				<starts-with>
-					<expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)\s+(do):.+$</expression>
+					<expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)</expression>
 					<capture number="1" name="elixir.keyword" />
 					<capture number="2" name="elixir.identifier.function.name" />
-					<capture number="3" name="elixir.keyword" />
 				</starts-with>
 				<ends-with>
 					<expression>(do)$</expression>
@@ -208,23 +207,23 @@
 					</scope>
 				</subscopes>
 			</scope>
-
-		    <scope name="elixir.definition.class.simple">
-  				<symbol type="class">
-  					<context behavior="start" group="class" />
-  				</symbol>
-  				<expression>(defmodule)\s([a-zA-Z_][a-zA-Z0-9_]*)\s(do)$</expression>
-  				<capture number="1" name="elixir.keyword" />
-  				<capture number="2" name="elixir.identifier.class.type.name" />
-  				<capture number="3" name="elixir.keyword" />
-  				<subscopes>
-  					<include syntax="self" collection="comments" />
-  					<include syntax="self" collection="imports" />
-  					<include syntax="self" collection="definitions" />
-  				</subscopes>
-  			</scope>
-
-		    <scope name="elixir.definition.class">
+			
+			<scope name="elixir.definition.class.simple">
+				<symbol type="class">
+					<context behavior="start" group="class" />
+				</symbol>
+				<expression>(defmodule)\s([a-zA-Z_][a-zA-Z0-9_]*)\s(do)$</expression>
+				<capture number="1" name="elixir.keyword" />
+				<capture number="2" name="elixir.identifier.class.type.name" />
+				<capture number="3" name="elixir.keyword" />
+				<subscopes>
+					<include syntax="self" collection="comments" />
+					<include syntax="self" collection="imports" />
+					<include syntax="self" collection="definitions" />
+				</subscopes>
+			</scope>
+			
+			<scope name="elixir.definition.class">
 				<symbol type="class">
 					<context behavior="start" group="class" />
 				</symbol>
@@ -233,14 +232,14 @@
 				<capture number="2" name="elixir.identifier.type.superclass" />
 				<capture number="3" name="elixir.identifier.class.type.name" />
 				<capture number="4" name="elixir.keyword" />
-		        <subscopes>
+				<subscopes>
 					<include syntax="self" collection="comments" />
 					<include syntax="self" collection="imports" />
 					<include syntax="self" collection="definitions" />
 				</subscopes>
 			</scope>
-
-		    <scope name="elixir.definition.macro">
+			
+			<scope name="elixir.definition.macro">
 				<symbol type="function">
 					<context behavior="start" group="function" />
 				</symbol>
@@ -261,7 +260,7 @@
 					<include syntax="self" collection="values" />
 				</subscopes>
 			</scope>
-
+			
 			<scope name="elixir.definition.quote">
 				<symbol type="function">
 					<context behavior="start" group="function" />
@@ -277,7 +276,7 @@
 					<include syntax="self" collection="values" />
 				</subscopes>
 			</scope>
-
+			
 			<scope name="elixir.definition.test.function">
 				<symbol type="function">
 					<context behavior="start" group="function" />
@@ -292,7 +291,7 @@
 					<expression>\s(do)</expression>
 					<capture number="1" name="elixir.keyword" />
 				</ends-with>
-		        <subscopes>
+				<subscopes>
 					<scope name="elixir.arguments">
 						<starts-with>
 							<expression>%\{</expression>
@@ -315,7 +314,7 @@
 					<include syntax="self" collection="values" />
 				</subscopes>
 			</scope>
-
+			
 			<scope name="elixir.definition.test.setup">
 				<symbol type="function">
 					<context behavior="subtree" group="function" />
@@ -331,7 +330,7 @@
 					<capture number="1" name="elixir.keyword" />
 				</ends-with>
 			</scope>
-
+			
 			<scope name="elixir.definition.test.class.start">
 				<symbol type="class">
 					<context behavior="start" group="class" />
@@ -345,14 +344,14 @@
 					<expression>\s(do)</expression>
 					<capture number="1" name="elixir.keyword" />
 				</ends-with>
-		        <subscopes>
+				<subscopes>
 					<include syntax="self" collection="comments" />
 					<include syntax="self" collection="imports" />
 					<include syntax="self" collection="definitions" />
 					<include syntax="self" collection="values" />
 				</subscopes>
 			</scope>
-
+			
 			<scope name="elixir.definition.ecto.schema">
 				<symbol type="property">
 					<context behavior="start" group="function" />
@@ -392,19 +391,19 @@
 				<expression>\b(else)\b</expression>
 				<capture number="1" name="elixir.keyword" />
 			</scope>
-
+			
 			<scope name="elixir.definition.block-next">
 				<symbol type="block">
 					<context behavior="next" />
 				</symbol>
 				<expression>\b(.*)-></expression>
-		        <subscopes>
+				<subscopes>
 					<include syntax="self" collection="definitions" />
 					<include syntax="self" collection="strings" />
 					<include syntax="self" collection="values" />
 				</subscopes>
 			</scope>
-
+			
 			<scope name="elixir.definition.end">
 				<symbol type="block">
 					<context behavior="end" />
@@ -413,11 +412,11 @@
 				<capture number="1" name="elixir.keyword" />
 			</scope>
 		</collection>
-
+		
 		<!-- Values -->
 		<collection name="values">
 			<include syntax="self" collection="strings" />
-
+			
 			<scope name="elixir.value.null">
 				<strings>
 					<string>nil</string>
@@ -429,7 +428,7 @@
 					<string>false</string>
 				</strings>
 			</scope>
-            <scope name="elixir.value.number.bin">
+			<scope name="elixir.value.number.bin">
 				<expression>\b0b[0-1]+\b</expression>
 			</scope>
 			<scope name="elixir.value.number.hex">
@@ -441,7 +440,7 @@
 			<scope name="elixir.value.number">
 				<expression>\b\-?(?:\d+(?:\.\d)?|(?:\.\d+))\b</expression>
 			</scope>
-
+			
 			<scope name="elixir.value.list">
 				<symbol type="expression">
 					<context behavior="subtree" />
@@ -461,7 +460,7 @@
 					<include syntax="self" collection="syntax" />
 				</subscopes>
 			</scope>
-
+			
 			<scope name="elixir.value.tuple">
 				<symbol type="expression">
 					<context behavior="subtree" />
@@ -481,7 +480,7 @@
 					<include syntax="self" collection="syntax" />
 				</subscopes>
 			</scope>
-
+			
 			<scope name="elixir.value.map">
 				<symbol type="struct">
 					<context behavior="subtree" />
@@ -501,7 +500,7 @@
 					<include syntax="self" collection="syntax" />
 				</subscopes>
 			</scope>
-
+						
 			<scope name="elixir.value.struct">
 				<symbol type="struct">
 					<context behavior="subtree" />
@@ -523,7 +522,7 @@
 				</subscopes>
 			</scope>
 		</collection>
-
+		
 		<!-- Strings -->
 		<collection name="strings">
 			<scope name="elixir.string.block" spell-check="true">
@@ -660,14 +659,14 @@
 				</subscopes>
 			</scope>
 		</collection>
-
+		
 		<!-- Variable substitution -->
 		<collection name="variable-substitution">
 			<scope name="elixir.string.variable-substitution">
 				<expression>\#\{.*?\}</expression>
 			</scope>
 		</collection>
-
+		
 		<!-- Identifiers -->
 		<collection name="identifiers">
 			<scope name="elixir.identifier.variable.instance">
@@ -688,7 +687,7 @@
 					<!-- <string>Atom</string> -->
 				</strings>
 			</scope>
-
+			
 			<scope name="elixir.function.docstring">
 				<starts-with>
 					<expression>@(doc|moduledoc)\s+&quot;&quot;&quot;</expression>
@@ -702,7 +701,7 @@
 				<expression>@(spec)\s+.$</expression>
 				<capture number="1" name="elixir.identifier.typespec" />
 			</scope>
-
+			
 			<scope name="elixir.identifier.module.submodule">
 				<expression>\b(?&lt;=\.)([a-zA-Z_][a-zA-Z0-9_]*)(?!\()\b</expression>
 			</scope>
@@ -719,7 +718,7 @@
 				<expression>\b[a-zA-Z_][A-Za-z0-9_]*\b</expression>
 			</scope>
 		</collection>
-
+		
 		<collection name="syntax">
 			<scope name="elixir.bracket">
 				<expression>[\(\[\{\)\]\}]</expression>
