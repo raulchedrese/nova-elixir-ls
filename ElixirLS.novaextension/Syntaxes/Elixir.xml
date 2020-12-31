@@ -144,14 +144,11 @@
             
             <!-- Inline Function -->
             <scope name="elixir.definition.function.inline">
-                <symbol type="function">
-                    <context behavior="subtree" group="function" />
-                </symbol>
-                <expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)(\()(.+)(\)),\s+(do):.+$</expression>
+                <expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)(\()(.+)(\)).*,\s+(do):.+$</expression>
                 <capture number="1" name="elixir.keyword" />
                 <capture number="2" name="elixir.identifier.function.name" />
                 <capture number="3" name="elixir.bracket" />
-                <capture number="4" name="elixir.identifier.function.arguments" />
+                <capture number="4" name="elixir.identifier.arguments" />
                 <capture number="5" name="elixir.bracket" />
                 <capture number="6" name="elixir.keyword" />
             </scope>
