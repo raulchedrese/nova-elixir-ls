@@ -1,731 +1,427 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <syntax name="elixir">
-	<meta>
-		<name>Elixir</name>
-		<type>script</type>
-		<preferred-file-extension>ex</preferred-file-extension>
-		<scriptable shebang="#!/usr/bin/env elixir" />
-	</meta>
-	
-	<detectors>
-		<extension priority="1.0">ex,exs</extension>
-		<filename priority="1.0">mix.lock</filename>
-		<match-content lines="2" priority="1.0">\#\s*\-\*\-\s*mode:\s*elixir\b</match-content>
-		<match-content lines="5" priority="1.0">^#\s*vi:\s*(syntax|ft)=(elixir)\b</match-content>
-		<match-content lines="2" priority="0.7">\#\!.*?\belixir\b</match-content>
-	</detectors>
-	
-	<indentation>
-		<increase>
-			<expression>(^.*(do)$)|(^.*\-\&gt;$)|(^\s*(from).*,$)|(^.*\s=$)|(\{[^}\"']*$)|(\[[^\]\"']*$)|(\([^)\"']*$)</expression>
-		</increase>
-		<decrease>
-			<expression>^\s*(\s*/\*.*\*/\s*)*[\}\]\)\\]</expression>
-		</decrease>
-	</indentation>
-	
-	<comments>
-		<single>
-			<expression>#</expression>
-		</single>
-	</comments>
-	
-	<brackets>
-		<pair open="{" close="}" />
-		<pair open="[" close="]" />
-		<pair open="(" close=")" />
-		<pair open="&lt;&lt;" close="&gt;&gt;" />
-	</brackets>
-	
-	<surrounding-pairs>
-		<pair open="{" close="}" />
-		<pair open="[" close="]" />
-		<pair open="(" close=")" />
-		<pair open="&apos;" close="&apos;" />
-		<pair open="&quot;" close="&quot;" />
-	</surrounding-pairs>
-	
-	<symbols redefinition="within-construct">
-		<local scope="within-construct" />
-		
-		<documentation mode="before" match-multiple="comment" />
-		<documentation mode="after" match-multiple="comment" />
-	</symbols>
-	
-	<scopes>
-		<include syntax="self" collection="comments" />
-		<include syntax="self" collection="imports" />
-		<include syntax="self" collection="definitions" />
-		
-		<scope name="elixir.keyword">
-			<strings>
-				<!-- reserved words -->
-				<string>when</string>
-				<string>and</string>
-				<string>or</string>
-				<string>not</string>
-				<string>in</string>
-				<string>fn</string>
-				<string>do</string>
-				<string>end</string>
-				<string>catch</string>
-				<string>rescue</string>
-				<string>raise</string>
-				<string>throw</string>
-				<string>after</string>
-				<string>else</string>
-				<string>for</string>
-				<string>with</string>
-				<string>receive</string>
-				<string>exit</string>
-				<string>super</string>
-				<!-- definitions -->
-				<string>def</string>
-				<string>defp</string>
-				<string>defdelegate</string>
-				<string>defmacro</string>
-				<string>defstruct</string>
-				<string>defprotocol</string>
-				<string>defimpl</string>
-				<string>defrecord</string>
-				<string>defrecordp</string>
-				<string>defcallback</string>
-				<string>defexception</string>
-				<string>defoverridable</string>
-				<string>defguard</string>
-				<string>defguardp</string>
-				<string>quote</string>
-				<string>unquote</string>
-				<!-- testing -->
-				<string>describe</string>
-				<string>test</string>
-				<string>assert</string>
-			</strings>
-		</scope>
-		
-		<include syntax="self" collection="values" />
-		<include syntax="self" collection="identifiers" />
-		<include syntax="self" collection="syntax" />
-	</scopes>
-	
-	<collections>
-		<!-- Comments -->
-		<collection name="comments">
-			<scope name="elixir.comment.single" spell-check="true">
-				<expression>\#(.*)$</expression>
-				<capture number="1" name="elixir.comment.content" />
-			</scope>
-		</collection>
-		
-		<!-- Imports -->
-		<collection name="imports">
-			<scope name="elixir.import">
-				<starts-with>
-					<expression>\b(alias|import|require|use)\b</expression>
-					<capture number="1" name="elixir.keyword" />
-				</starts-with>
-				<ends-with>
-					<expression>$</expression>
-				</ends-with>
-				<subscopes>
-					<scope name="elixir.keyword">
-						<expression>as:</expression>
-					</scope>
-					<scope name="elixir.import.identifier.symbol">
-						<symbol type="package" scope="external" />
-						<expression>([a-zA-Z][a-zA-Z0-9\-_\.]+)</expression>
-					</scope>
-					<scope name="elixir.separator">
-						<expression>,</expression>
-					</scope>
-				</subscopes>
-			</scope>
-		</collection>
-		
-		<!-- Definitions -->
-		<collection name="definitions">
-			<scope name="elixir.definition.property">
-				<symbol type="property" scope="public" />
-				<expression>@!(moduledoc|doc)([a-zA-Z_][A-Za-z0-9_]*)\s*(.*)$</expression>
-				<capture number="2" name="elixir.identifier.property.name" />
-			</scope>
-			
-			<scope name="elixir.definition.local">
-				<symbol type="variable" scope="local" />
-				<expression>([a-zA-Z_][A-Za-z0-9_]*)\s*(\=)</expression>
-				<capture number="1" name="elixir.identifier.name" />
-				<capture number="2" name="elixir.operator" />
-			</scope>
+    <meta>
+        <name>Elixir</name>
+        <type>script</type>
+        <preferred-file-extension>ex</preferred-file-extension>
+        <scriptable shebang="#!/usr/bin/env elixir" />
+    </meta>
+    
+    <detectors>
+        <extension priority="1.0">ex,exs</extension>
+        <filename priority="1.0">mix.lock</filename>
+        <match-content lines="2" priority="1.0">\#\s*\-\*\-\s*mode:\s*elixir\b</match-content>
+        <match-content lines="5" priority="1.0">^#\s*vi:\s*(syntax|ft)=(elixir)\b</match-content>
+        <match-content lines="2" priority="0.7">\#\!.*?\belixir\b</match-content>
+    </detectors>
+    
+    <indentation>
+        <increase>
+            <expression>do|else|\{</expression>
+        </increase>
+        <decrease>
+            <expression>end|else|\}</expression>
+        </decrease>
+    </indentation>
+    
+    <comments>
+        <single>
+            <expression>#</expression>
+        </single>
+    </comments>
+    
+    <brackets>
+        <pair open="{" close="}" />
+        <pair open="[" close="]" />
+        <pair open="(" close=")" />
+        <pair open="&lt;&lt;" close="&gt;&gt;" />
+    </brackets>
+    
+    <surrounding-pairs>
+        <pair open="{" close="}" />
+        <pair open="[" close="]" />
+        <pair open="(" close=")" />
+        <pair open="&apos;" close="&apos;" />
+        <pair open="&quot;" close="&quot;" />
+    </surrounding-pairs>
+    
+    <scopes>
+        <include syntax="self" collection="comments" />
+        <include syntax="self" collection="definitions" />
+        <include syntax="self" collection="keywords" />
+        <include syntax="self" collection="blocks" />
+        <include syntax="self" collection="imports" />
+        <include syntax="self" collection="strings" />
+        <include syntax="self" collection="values" />
+        <include syntax="self" collection="identifiers" />
+        <include syntax="self" collection="syntax" />
+    </scopes>
+    
+    <collections>
+        <!-- Comments -->
+        <collection name="comments">
+            <scope name="elixir.comment.single" spell-check="true">
+                <expression>\#(.*)$</expression>
+                <capture number="1" name="elixir.comment.content" />
+            </scope>
+        </collection>
+        
+        <!-- Imports -->
+        <collection name="imports">
+            <scope name="elixir.import">
+                <starts-with>
+                    <expression>\b(alias|import|require|use)\b</expression>
+                    <capture number="1" name="elixir.keyword" />
+                </starts-with>
+                <ends-with>
+                    <expression>$</expression>
+                </ends-with>
+                <subscopes>
+                    <scope name="elixir.keyword">
+                        <expression>as:</expression>
+                    </scope>
+                    <scope name="elixir.import.identifier.symbol">
+                        <symbol type="package" scope="external" />
+                        <expression>([a-zA-Z][a-zA-Z0-9\-_\.]+)</expression>
+                        <capture number="0" name="elixir.import.identifier.type.package" />
+                    </scope>
+                    <scope name="elixir.separator">
+                        <expression>,</expression>
+                    </scope>
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Blocks -->
+        <collection name="blocks">
+            <scope name="elixir.block">
+                <symbol type="block">
+                    <context behavior="subtree" />
+                </symbol>
+                <starts-with>
+                    <expression>\bdo\b</expression>
+                    <capture number="0" name="elixir.keyword" />
+                </starts-with>
+                <ends-with>
+                    <expression>\bend\b</expression>
+                    <capture number="0" name="elixir.keyword" />
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Definitions -->
+        <collection name="definitions">
+            <!-- Modules -->
+            <scope name="elixir.definition.class">
+                <symbol type="function">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>(defmodule)\s+([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_\.]*)</expression>
+                    <capture number="1" name="elixir.keyword" />
+                    <capture number="2" name="elixir.identifier.type.class.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=end)</expression>
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="blocks" />
+                </subscopes>
+            </scope>
+            
+            <!-- Inline Function -->
+            <scope name="elixir.definition.function.inline">
+                <symbol type="function">
+                    <context behavior="subtree" group="function" />
+                </symbol>
+                <expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)(\()(.+)(\)),\s+(do):.+$</expression>
+                <capture number="1" name="elixir.keyword" />
+                <capture number="2" name="elixir.identifier.function.name" />
+                <capture number="3" name="elixir.bracket" />
+                <capture number="4" name="elixir.identifier.function.arguments" />
+                <capture number="5" name="elixir.bracket" />
+                <capture number="6" name="elixir.keyword" />
+            </scope>
+            
+            <!-- Function Stubs -->
+            <scope name="elixir.definition.function.stub">
+                <symbol type="function">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <expression>(def)\s+([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)\(.*\)</expression>
+                <capture number="1" name="elixir.keyword" />
+                <capture number="2" name="elixir.identifier.function.name" />
+            </scope>
 
-			<scope name="elixir.definition.function.inline">
-				<symbol type="function">
-					<context behavior="subtree" group="function" />
-				</symbol>
-				<expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)(\()(.+)(\)),\s+(do):.+$</expression>
-				<capture number="1" name="elixir.keyword" />
-				<capture number="2" name="elixir.identifier.function.name" />
-				<capture number="3" name="elixir.bracket" />
-				<capture number="4" name="elixir.identifier.function.arguments" />
-				<capture number="5" name="elixir.bracket" />
-				<capture number="6" name="elixir.keyword" />
-			</scope>
-			
-			<scope name="elixir.definition.function">
-				<symbol type="function">
-					<context behavior="start" group="function" />
-				</symbol>
-				<starts-with>
-					<expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)</expression>
-					<capture number="1" name="elixir.keyword" />
-					<capture number="2" name="elixir.identifier.function.name" />
-				</starts-with>
-				<ends-with>
-					<expression>(do)$</expression>
-					<capture number="1" name="elixir.keyword" />
-				</ends-with>
-				<subscopes>
-					<scope name="elixir.arguments">
-						<starts-with>
-							<expression>\(</expression>
-							<capture number="0" name="elixir.bracket" />
-						</starts-with>
-						<ends-with>
-							<expression>\)|$</expression>
-							<capture number="0" name="elixir.bracket" />
-						</ends-with>
-						<subscopes>
-							<scope name="elixir.separator">
-								<expression>,</expression>
-							</scope>
-							<scope name="elixir.identifier.argument.name">
-								<symbol type="argument" />
-								<expression>(?&lt;!\=)\b[a-zA-Z_][A-Za-z0-9_]*\b</expression>
-							</scope>
-							<include syntax="self" collection="values" />
-							<include syntax="self" collection="syntax" />
-						</subscopes>
-					</scope>
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.definition.class.simple">
-				<symbol type="class">
-					<context behavior="start" group="class" />
-				</symbol>
-				<expression>(defmodule)\s([a-zA-Z_][a-zA-Z0-9_]*)\s(do)$</expression>
-				<capture number="1" name="elixir.keyword" />
-				<capture number="2" name="elixir.identifier.class.type.name" />
-				<capture number="3" name="elixir.keyword" />
-				<subscopes>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="imports" />
-					<include syntax="self" collection="definitions" />
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.definition.class">
-				<symbol type="class">
-					<context behavior="start" group="class" />
-				</symbol>
-				<expression>(defmodule)\s([a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z_][a-zA-Z0-9_\.]*)\s(do)$</expression>
-				<capture number="1" name="elixir.keyword" />
-				<capture number="2" name="elixir.identifier.type.superclass" />
-				<capture number="3" name="elixir.identifier.class.type.name" />
-				<capture number="4" name="elixir.keyword" />
-				<subscopes>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="imports" />
-					<include syntax="self" collection="definitions" />
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.definition.macro">
-				<symbol type="function">
-					<context behavior="start" group="function" />
-				</symbol>
-				<starts-with>
-					<expression>(defmacro)</expression>
-					<capture number="1" name="elixir.keyword" />
-					<capture number="2" name="elixir.identifier.function.name" />
-					<capture number="3" name="elixir.keyword" />
-				</starts-with>
-				<ends-with>
-					<expression>\s(do)</expression>
-					<capture number="1" name="elixir.keyword" />
-				</ends-with>
-				<subscopes>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="imports" />
-					<include syntax="self" collection="definitions" />
-					<include syntax="self" collection="values" />
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.definition.quote">
-				<symbol type="function">
-					<context behavior="start" group="function" />
-				</symbol>
-				<expression>(quote)\s(.*)\s(do)$</expression>
-				<capture number="1" name="elixir.keyword" />
-				<capture number="2" name="elixir.identifier.function.name" />
-				<capture number="3" name="elixir.keyword" />
-				<subscopes>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="imports" />
-					<include syntax="self" collection="definitions" />
-					<include syntax="self" collection="values" />
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.definition.test.function">
-				<symbol type="function">
-					<context behavior="start" group="function" />
-				</symbol>
-				<starts-with>
-					<expression>(test)\s+&quot;(.*)&quot;</expression>
-					<capture number="1" name="elixir.keyword" />
-					<capture number="2" name="elixir.identifier.function.name" />
-					<capture number="3" name="elixir.keyword" />
-				</starts-with>
-				<ends-with>
-					<expression>\s(do)</expression>
-					<capture number="1" name="elixir.keyword" />
-				</ends-with>
-				<subscopes>
-					<scope name="elixir.arguments">
-						<starts-with>
-							<expression>%\{</expression>
-							<capture number="0" name="elixir.bracket" />
-						</starts-with>
-						<ends-with>
-							<expression>\}</expression>
-							<capture number="0" name="elixir.bracket" />
-						</ends-with>
-						<subscopes>
-							<scope name="elixir.separator">
-								<expression>,</expression>
-							</scope>
-							<include syntax="self" collection="identifiers" />
-						</subscopes>
-					</scope>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="imports" />
-					<include syntax="self" collection="definitions" />
-					<include syntax="self" collection="values" />
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.definition.test.setup">
-				<symbol type="function">
-					<context behavior="subtree" group="function" />
-				</symbol>
-				<starts-with>
-					<expression>(setup)\s(%\{.+\}\s+)?(do)</expression>
-					<capture number="1" name="elixir.keyword" />
-					<capture number="2" name="elixir.identifier.argument.value" />
-					<capture number="3" name="elixir.keyword" />
-				</starts-with>
-				<ends-with>
-					<expression>\s(end)</expression>
-					<capture number="1" name="elixir.keyword" />
-				</ends-with>
-			</scope>
-			
-			<scope name="elixir.definition.test.class.start">
-				<symbol type="class">
-					<context behavior="start" group="class" />
-				</symbol>
-				<starts-with>
-					<expression>(describe)\s+&quot;(.*)&quot;</expression>
-					<capture number="1" name="elixir.keyword" />
-					<capture number="2" name="elixir.identifier.function.name" />
-				</starts-with>
-				<ends-with>
-					<expression>\s(do)</expression>
-					<capture number="1" name="elixir.keyword" />
-				</ends-with>
-				<subscopes>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="imports" />
-					<include syntax="self" collection="definitions" />
-					<include syntax="self" collection="values" />
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.definition.ecto.schema">
-				<symbol type="property">
-					<context behavior="start" group="function" />
-				</symbol>
-				<starts-with>
-					<expression>(schema)\s+&quot;([a-zA-Z_][a-zA-Z0-9_]*)&quot;</expression>
-					<capture number="1" name="elixir.keyword" />
-					<capture number="2" name="elixir.identifier.function.name" />
-				</starts-with>
-				<ends-with>
-					<expression>\s(do)$</expression>
-					<capture number="1" name="elixir.keyword" />
-				</ends-with>
-			</scope>
-
-			<scope name="elixir.definition.block-inline">
-				<symbol type="block">
-					<context behavior="start" />
-				</symbol>
-				<expression>\b(fn)\b</expression>
-				<capture number="1" name="elixir.keyword" />
-			</scope>
-
-			<scope name="elixir.definition.block">
-				<symbol type="block">
-					<context behavior="start" />
-				</symbol>
-				<expression>\b(case|cond|if|unless|try)\s.+(do)\b</expression>
-				<capture number="1" name="elixir.keyword" />
-				<capture number="2" name="elixir.keyword" />
-			</scope>
-
-			<scope name="elixir.definition.block-next">
-				<symbol type="block">
-					<context behavior="next" />
-				</symbol>
-				<expression>\b(else)\b</expression>
-				<capture number="1" name="elixir.keyword" />
-			</scope>
-			
-			<scope name="elixir.definition.block-next">
-				<symbol type="block">
-					<context behavior="next" />
-				</symbol>
-				<expression>\b(.*)-></expression>
-				<subscopes>
-					<include syntax="self" collection="definitions" />
-					<include syntax="self" collection="strings" />
-					<include syntax="self" collection="values" />
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.definition.end">
-				<symbol type="block">
-					<context behavior="end" />
-				</symbol>
-				<expression>\b(end)\b</expression>
-				<capture number="1" name="elixir.keyword" />
-			</scope>
-		</collection>
-		
-		<!-- Values -->
-		<collection name="values">
-			<include syntax="self" collection="strings" />
-			
-			<scope name="elixir.value.null">
-				<strings>
-					<string>nil</string>
-				</strings>
-			</scope>
-			<scope name="elixir.value.boolean">
-				<strings>
-					<string>true</string>
-					<string>false</string>
-				</strings>
-			</scope>
-			<scope name="elixir.value.number.bin">
-				<expression>\b0b[0-1]+\b</expression>
-			</scope>
-			<scope name="elixir.value.number.hex">
-				<expression>\b0x[a-fA-F0-9]+\b</expression>
-			</scope>
-			<scope name="elixir.value.number.oct">
-				<expression>\b0o[0-7]+\b</expression>
-			</scope>
-			<scope name="elixir.value.number">
-				<expression>\b\-?(?:\d+(?:\.\d)?|(?:\.\d+))\b</expression>
-			</scope>
-			
-			<scope name="elixir.value.list">
-				<symbol type="expression">
-					<context behavior="subtree" />
-				</symbol>
-				<starts-with>
-					<expression>\[</expression>
-					<capture number="0" name="elixir.bracket" />
-				</starts-with>
-				<ends-with>
-					<expression>\]</expression>
-					<capture number="0" name="elixir.bracket" />
-				</ends-with>
-				<subscopes>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="values" />
-					<include syntax="self" collection="identifiers" />
-					<include syntax="self" collection="syntax" />
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.value.tuple">
-				<symbol type="expression">
-					<context behavior="subtree" />
-				</symbol>
-				<starts-with>
-					<expression>\{</expression>
-					<capture number="0" name="elixir.bracket" />
-				</starts-with>
-				<ends-with>
-					<expression>\}</expression>
-					<capture number="0" name="elixir.bracket" />
-				</ends-with>
-				<subscopes>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="values" />
-					<include syntax="self" collection="identifiers" />
-					<include syntax="self" collection="syntax" />
-				</subscopes>
-			</scope>
-			
-			<scope name="elixir.value.map">
-				<symbol type="struct">
-					<context behavior="subtree" />
-				</symbol>
-				<starts-with>
-					<expression>\%\{</expression>
-					<capture number="0" name="elixir.bracket" />
-				</starts-with>
-				<ends-with>
-					<expression>\}</expression>
-					<capture number="0" name="elixir.bracket" />
-				</ends-with>
-				<subscopes>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="values" />
-					<include syntax="self" collection="identifiers" />
-					<include syntax="self" collection="syntax" />
-				</subscopes>
-			</scope>
-						
-			<scope name="elixir.value.struct">
-				<symbol type="struct">
-					<context behavior="subtree" />
-				</symbol>
-				<starts-with>
-					<expression>(\%[\w_]+)(\{)</expression>
-					<capture number="1" name="elixir.struct.identifier" />
-					<capture number="2" name="elixir.bracket" />
-				</starts-with>
-				<ends-with>
-					<expression>\}</expression>
-					<capture number="0" name="elixir.bracket" />
-				</ends-with>
-				<subscopes>
-					<include syntax="self" collection="comments" />
-					<include syntax="self" collection="values" />
-					<include syntax="self" collection="identifiers" />
-					<include syntax="self" collection="syntax" />
-				</subscopes>
-			</scope>
-		</collection>
-		
-		<!-- Strings -->
-		<collection name="strings">
-			<scope name="elixir.string.block" spell-check="true">
-				<symbol type="comment">
-					<context behavior="subtree" />
-				</symbol>
-				<starts-with>
-					<expression>&quot;&quot;&quot;</expression>
-				</starts-with>
-				<ends-with>
-					<expression>&quot;&quot;&quot;</expression>
-				</ends-with>
-			</scope>
-			<scope name="elixir.sigil.block.slash">
-				<starts-with>
-					<expression>(~[a-z])(\/)</expression>
-					<capture number="1" name="elixir.string.block.modifier" />
-					<capture number="2" name="elixir.string.block.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(\/)([a-z]+)?</expression>
-					<capture number="1" name="elixir.string.block.delimiter" />
-					<capture number="2" name="elixir.string.block.modifier" />
-				</ends-with>
-			</scope>
-			<scope name="elixir.sigil.block.pipe">
-				<starts-with>
-					<expression>(~[a-z])(\|)</expression>
-					<capture number="1" name="elixir.string.block.modifier" />
-					<capture number="2" name="elixir.string.block.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(\|)([a-z]+)?</expression>
-					<capture number="1" name="elixir.string.block.delimiter" />
-					<capture number="2" name="elixir.string.block.modifier" />
-				</ends-with>
-			</scope>
-			<scope name="elixir.sigil.block.quot">
-				<starts-with>
-					<expression>(~[a-z])(&quot;)</expression>
-					<capture number="1" name="elixir.string.block.modifier" />
-					<capture number="2" name="elixir.string.block.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(&quot;)([a-z]+)?</expression>
-					<capture number="1" name="elixir.string.block.delimiter" />
-					<capture number="2" name="elixir.string.block.modifier" />
-				</ends-with>
-			</scope>
-			<scope name="elixir.sigil.block.apos">
-				<starts-with>
-					<expression>(~[a-z])(&apos;)</expression>
-					<capture number="1" name="elixir.string.block.modifier" />
-					<capture number="2" name="elixir.string.block.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(&apos;)([a-z]+)?</expression>
-					<capture number="1" name="elixir.string.block.delimiter" />
-					<capture number="2" name="elixir.string.block.modifier" />
-				</ends-with>
-			</scope>
-			<scope name="elixir.sigil.block.paren">
-				<starts-with>
-					<expression>(~[a-z])(\()</expression>
-					<capture number="1" name="elixir.string.block.modifier" />
-					<capture number="2" name="elixir.string.block.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(\))([a-z]+)?</expression>
-					<capture number="1" name="elixir.string.block.delimiter" />
-					<capture number="2" name="elixir.string.block.modifier" />
-				</ends-with>
-			</scope>
-			<scope name="elixir.sigil.block.brace">
-				<starts-with>
-					<expression>(~[a-z])(\[)</expression>
-					<capture number="1" name="elixir.string.block.modifier" />
-					<capture number="2" name="elixir.string.block.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(\])([a-z]+)?</expression>
-					<capture number="1" name="elixir.string.block.delimiter" />
-					<capture number="2" name="elixir.string.block.modifier" />
-				</ends-with>
-			</scope>
-			<scope name="elixir.sigil.block.curly">
-				<starts-with>
-					<expression>(~[a-z])(\{)</expression>
-					<capture number="1" name="elixir.string.block.modifier" />
-					<capture number="2" name="elixir.string.block.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(\})([a-z]+)?</expression>
-					<capture number="1" name="elixir.string.block.delimiter" />
-					<capture number="2" name="elixir.string.block.modifier" />
-				</ends-with>
-			</scope>
-			<scope name="elixir.sigil.block.chevron">
-				<starts-with>
-					<expression>(~[a-z])(&lt;)</expression>
-					<capture number="1" name="elixir.string.block.modifier" />
-					<capture number="2" name="elixir.string.block.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(&gt;)([a-z]+)?</expression>
-					<capture number="1" name="elixir.string.block.delimiter" />
-					<capture number="2" name="elixir.string.block.modifier" />
-				</ends-with>
-			</scope>
-			<scope name="elixir.string.double-quoted">
-				<starts-with>
-					<expression>&quot;</expression>
-					<capture number="0" name="elixir.string.double-quoted.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(?:[^&quot;\\]|\\.)*(&quot;|$)</expression>
-					<capture number="1" name="elixir.string.double-quoted.delimiter" />
-				</ends-with>
-				<subscopes>
-					<include syntax="self" collection="variable-substitution" />
-				</subscopes>
-			</scope>
-			<scope name="elixir.string.single-quoted">
-				<starts-with>
-					<expression>&apos;</expression>
-					<capture number="0" name="elixir.string.single-quoted.delimiter" />
-				</starts-with>
-				<ends-with>
-					<expression>(?:[^&apos;\\]|\\.)*(&apos;|$)</expression>
-					<capture number="1" name="elixir.string.single-quoted.delimiter" />
-				</ends-with>
-				<subscopes>
-					<include syntax="self" collection="variable-substitution" />
-				</subscopes>
-			</scope>
-		</collection>
-		
-		<!-- Variable substitution -->
-		<collection name="variable-substitution">
-			<scope name="elixir.string.variable-substitution">
-				<expression>\#\{.*?\}</expression>
-			</scope>
-		</collection>
-		
-		<!-- Identifiers -->
-		<collection name="identifiers">
-			<scope name="elixir.identifier.variable.instance">
-				<expression>@[a-z][A-Za-z0-9_]*</expression>
-			</scope>
-			<scope name="elixir.identifier.core.module">
-				<strings>
-					<!-- <string>Atom</string> -->
-				</strings>
-			</scope>
-			<scope name="elixir.identifier.core.class">
-				<strings>
-					<!-- <string>Atom</string> -->
-				</strings>
-			</scope>
-			<scope name="elixir.identifier.core.function">
-				<strings>
-					<!-- <string>Atom</string> -->
-				</strings>
-			</scope>
-			
-			<scope name="elixir.function.docstring">
-				<starts-with>
-					<expression>@(doc|moduledoc)\s+&quot;&quot;&quot;</expression>
-					<capture number="1" name="elixir.identifier.docstring" />
-				</starts-with>
-				<ends-with>
-					<expression>&quot;&quot;&quot;</expression>
-				</ends-with>
-			</scope>
-			<scope name="elixir.function.typespec">
-				<expression>@(spec)\s+.$</expression>
-				<capture number="1" name="elixir.identifier.typespec" />
-			</scope>
-			
-			<scope name="elixir.identifier.module.submodule">
-				<expression>\b(?&lt;=\.)([a-zA-Z_][a-zA-Z0-9_]*)(?!\()\b</expression>
-			</scope>
-			<scope name="elixir.identifier.property">
-				<expression>\b(?&lt;=\.)([a-zA-Z_][a-zA-Z0-9_]*)(?!\()\b</expression>
-			</scope>
-			<scope name="elixir.identifier.function">
-				<expression>\b(?&lt;!\.)([a-zA-Z_][a-zA-Z0-9_]*)(?=\()\b</expression>
-			</scope>
-			<scope name="elixir.identifier.constant">
-				<expression>\b(?&lt;![a-z0-9_])[A-Z_][A-Za-z0-9_]*\b</expression>
-			</scope>
-			<scope name="elixir.identifier">
-				<expression>\b[a-zA-Z_][A-Za-z0-9_]*\b</expression>
-			</scope>
-		</collection>
-		
-		<collection name="syntax">
-			<scope name="elixir.bracket">
-				<expression>[\(\[\{\)\]\}]</expression>
-			</scope>
-			<scope name="elixir.operator">
-				<expression>(\+|\-|\*|\*\*|/|%|\=|\=\=|\=~|!\=|\+\=|\-\=|\*\=|/\=|%\=|\*\*=|\&lt;|\&gt;|\&lt;\=|\&gt;=|\&lt;\=\&gt;|\=\=\=|\||\^|&amp;|\&lt;\&lt;|\&gt;\&gt;|~)</expression>
-			</scope>
-		</collection>
-	</collections>
+            <!-- Functions -->
+            <scope name="elixir.definition.function">
+                <symbol type="function">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>(def|defp)\s+([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)</expression>
+                    <capture number="1" name="elixir.keyword" />
+                    <capture number="2" name="elixir.identifier.function.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=end)</expression>
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="blocks" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Keywords -->
+        <collection name="keywords">
+            <scope name="elixir.keyword">
+                <strings>
+                    <!-- reserved words -->
+                    <string>case</string>
+                    <string>cond</string>
+                    <string>when</string>
+                    <string>and</string>
+                    <string>or</string>
+                    <string>not</string>
+                    <string>if</string>
+                    <string>in</string>
+                    <string>fn</string>
+                    <string>try</string>
+                    <string>catch</string>
+                    <string>rescue</string>
+                    <string>raise</string>
+                    <string>throw</string>
+                    <string>after</string>
+                    <string>else</string>
+                    <string>for</string>
+                    <string>with</string>
+                    <string>receive</string>
+                    <string>exit</string>
+                    <string>super</string>
+                    <!-- definitions -->
+                    <string>defdelegate</string>
+                    <string>defmacro</string>
+                    <string>defstruct</string>
+                    <string>defprotocol</string>
+                    <string>defimpl</string>
+                    <string>defrecord</string>
+                    <string>defrecordp</string>
+                    <string>defcallback</string>
+                    <string>defexception</string>
+                    <string>defoverridable</string>
+                    <string>defguard</string>
+                    <string>defguardp</string>
+                    <string>quote</string>
+                    <string>unquote</string>
+                    <!-- testing -->
+                    <string>describe</string>
+                    <string>test</string>
+                    <string>assert</string>
+                </strings>
+            </scope>
+        </collection>
+        
+        <!-- Values -->
+        <collection name="values">
+            <include syntax="self" collection="strings" />
+            <scope name="elixir.value.null">
+                <strings>
+                    <string>nil</string>
+                </strings>
+            </scope>
+            <scope name="elixir.value.boolean">
+                <strings>
+                    <string>true</string>
+                    <string>false</string>
+                </strings>
+            </scope>
+            <scope name="elixir.value.symbol">
+                <expression>:[A-Za-z][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*</expression>
+            </scope>
+            <scope name="elixir.value.number.hex">
+                <expression>\b0x[a-fA-F0-9]+\b</expression>
+            </scope>
+            <scope name="elixir.value.number">
+                <expression>\b\-?(?:\d+(?:\.\d*)?|(?:\.\d+))\b</expression>
+            </scope>
+        </collection>
+        
+        <!-- Strings -->
+        <collection name="strings">
+            <scope name="elixir.string.block" spell-check="true">
+                <symbol type="comment">
+                    <context behavior="subtree" />
+                </symbol>
+                <starts-with>
+                    <expression>&quot;&quot;&quot;</expression>
+                </starts-with>
+                <ends-with>
+                    <expression>&quot;&quot;&quot;</expression>
+                </ends-with>
+            </scope>
+            <scope name="elixir.sigil.block.slash">
+                <starts-with>
+                    <expression>(~[a-z])(\/)</expression>
+                    <capture number="1" name="elixir.string.block.modifier" />
+                    <capture number="2" name="elixir.string.block.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(\/)([a-z]+)?</expression>
+                    <capture number="1" name="elixir.string.block.delimiter" />
+                    <capture number="2" name="elixir.string.block.modifier" />
+                </ends-with>
+            </scope>
+            <scope name="elixir.sigil.block.pipe">
+                <starts-with>
+                    <expression>(~[a-z])(\|)</expression>
+                    <capture number="1" name="elixir.string.block.modifier" />
+                    <capture number="2" name="elixir.string.block.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(\|)([a-z]+)?</expression>
+                    <capture number="1" name="elixir.string.block.delimiter" />
+                    <capture number="2" name="elixir.string.block.modifier" />
+                </ends-with>
+            </scope>
+            <scope name="elixir.sigil.block.quot">
+                <starts-with>
+                    <expression>(~[a-z])(&quot;)</expression>
+                    <capture number="1" name="elixir.string.block.modifier" />
+                    <capture number="2" name="elixir.string.block.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(&quot;)([a-z]+)?</expression>
+                    <capture number="1" name="elixir.string.block.delimiter" />
+                    <capture number="2" name="elixir.string.block.modifier" />
+                </ends-with>
+            </scope>
+            <scope name="elixir.sigil.block.apos">
+                <starts-with>
+                    <expression>(~[a-z])(&apos;)</expression>
+                    <capture number="1" name="elixir.string.block.modifier" />
+                    <capture number="2" name="elixir.string.block.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(&apos;)([a-z]+)?</expression>
+                    <capture number="1" name="elixir.string.block.delimiter" />
+                    <capture number="2" name="elixir.string.block.modifier" />
+                </ends-with>
+            </scope>
+            <scope name="elixir.sigil.block.paren">
+                <starts-with>
+                    <expression>(~[a-z])(\()</expression>
+                    <capture number="1" name="elixir.string.block.modifier" />
+                    <capture number="2" name="elixir.string.block.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(\))([a-z]+)?</expression>
+                    <capture number="1" name="elixir.string.block.delimiter" />
+                    <capture number="2" name="elixir.string.block.modifier" />
+                </ends-with>
+            </scope>
+            <scope name="elixir.sigil.block.brace">
+                <starts-with>
+                    <expression>(~[a-z])(\[)</expression>
+                    <capture number="1" name="elixir.string.block.modifier" />
+                    <capture number="2" name="elixir.string.block.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(\])([a-z]+)?</expression>
+                    <capture number="1" name="elixir.string.block.delimiter" />
+                    <capture number="2" name="elixir.string.block.modifier" />
+                </ends-with>
+            </scope>
+            <scope name="elixir.sigil.block.curly">
+                <starts-with>
+                    <expression>(~[a-z])(\{)</expression>
+                    <capture number="1" name="elixir.string.block.modifier" />
+                    <capture number="2" name="elixir.string.block.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(\})([a-z]+)?</expression>
+                    <capture number="1" name="elixir.string.block.delimiter" />
+                    <capture number="2" name="elixir.string.block.modifier" />
+                </ends-with>
+            </scope>
+            <scope name="elixir.sigil.block.chevron">
+                <starts-with>
+                    <expression>(~[a-z])(&lt;)</expression>
+                    <capture number="1" name="elixir.string.block.modifier" />
+                    <capture number="2" name="elixir.string.block.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(&gt;)([a-z]+)?</expression>
+                    <capture number="1" name="elixir.string.block.delimiter" />
+                    <capture number="2" name="elixir.string.block.modifier" />
+                </ends-with>
+            </scope>
+            <scope name="elixir.string.double-quoted">
+                <starts-with>
+                    <expression>&quot;</expression>
+                    <capture number="0" name="elixir.string.double-quoted.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?:[^&quot;\\]|\\.)*(&quot;|$)</expression>
+                    <capture number="1" name="elixir.string.double-quoted.delimiter" />
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" collection="variable-substitution" />
+                </subscopes>
+            </scope>
+            <scope name="elixir.string.single-quoted">
+                <starts-with>
+                    <expression>&apos;</expression>
+                    <capture number="0" name="elixir.string.single-quoted.delimiter" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?:[^&apos;\\]|\\.)*(&apos;|$)</expression>
+                    <capture number="1" name="elixir.string.single-quoted.delimiter" />
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" collection="variable-substitution" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Identifiers -->
+        <collection name="identifiers">
+            <scope name="elixir.identifier.key">
+                <expression>([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*):</expression>
+            </scope>
+            <scope name="elixir.identifier.type.class">
+                <expression>\b[A-Z]([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)\b</expression>
+            </scope>
+            <scope name="elixir.identifier.function">
+                <expression>([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*[?!]?)(?=\()</expression>
+            </scope>
+            <scope name="elixir.function.docstring">
+                <starts-with>
+                    <expression>@(doc|moduledoc)\s+&quot;&quot;&quot;</expression>
+                    <capture number="1" name="elixir.identifier.docstring" />
+                </starts-with>
+                <ends-with>
+                    <expression>&quot;&quot;&quot;</expression>
+                </ends-with>
+            </scope>
+            <scope name="elixir.function.typespec">
+                <expression>@(spec)\s+.$</expression>
+                <capture number="1" name="elixir.identifier.typespec" />
+            </scope>
+        </collection>
+        
+        <!-- Syntax -->
+        <collection name="syntax">
+            <scope name="elixir.bracket">
+                <expression>[\(\[\{\)\]\}]</expression>
+            </scope>
+            <scope name="elixir.operator">
+                <expression>(\+|\-|\*|\*\*|/|%|\=|\=\=|\=~|!\=|\+\=|\-\=|\*\=|/\=|%\=|\*\*=|\&lt;|\&gt;|\&lt;\=|\&gt;=|\&lt;\=\&gt;|\=\=\=|\||\^|&amp;|\&lt;\&lt;|\&gt;\&gt;|~)</expression>
+            </scope>
+        </collection>
+    </collections>
 </syntax>
