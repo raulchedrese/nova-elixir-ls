@@ -64,6 +64,15 @@
                 <expression>\#(.*)$</expression>
                 <capture number="1" name="elixir.comment.content" />
             </scope>
+            <scope name="elixir.comment.docstring">
+                <starts-with>
+                    <expression>@(doc|moduledoc)\s+&quot;&quot;&quot;</expression>
+                    <capture number="1" name="elixir.identifier.cdocstring" />
+                </starts-with>
+                <ends-with>
+                    <expression>&quot;&quot;&quot;</expression>
+                </ends-with>
+            </scope>
         </collection>
         
         <!-- Imports -->
@@ -398,15 +407,6 @@
             </scope>
             <scope name="elixir.identifier.function">
                 <expression>([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*[?!]?)(?=\()</expression>
-            </scope>
-            <scope name="elixir.function.docstring">
-                <starts-with>
-                    <expression>@(doc|moduledoc)\s+&quot;&quot;&quot;</expression>
-                    <capture number="1" name="elixir.identifier.docstring" />
-                </starts-with>
-                <ends-with>
-                    <expression>&quot;&quot;&quot;</expression>
-                </ends-with>
             </scope>
             <scope name="elixir.function.typespec">
                 <expression>@(spec)\s+.$</expression>
