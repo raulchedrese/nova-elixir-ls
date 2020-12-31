@@ -17,7 +17,7 @@
     
     <indentation>
         <increase>
-            <expression>do|else|\{</expression>
+            <expression>do|else|->|\{</expression>
         </increase>
         <decrease>
             <expression>end|else|\}</expression>
@@ -144,19 +144,25 @@
             
             <!-- Inline Function -->
             <scope name="elixir.definition.function.inline">
-                <expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)(\()(.+)(\)).*,\s+(do):.+$</expression>
-                <capture number="1" name="elixir.keyword" />
-                <capture number="2" name="elixir.identifier.function.name" />
-                <capture number="3" name="elixir.bracket" />
-                <capture number="4" name="elixir.identifier.arguments" />
-                <capture number="5" name="elixir.bracket" />
-                <capture number="6" name="elixir.keyword" />
+                <starts-with>
+                    <expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)(\(.+\)).*,\s+(do):</expression>
+                    <capture number="1" name="elixir.keyword" />
+                    <capture number="2" name="elixir.identifier.function.name" />
+                    <capture number="3" name="elixir.identifier.arguments" />
+                    <capture number="4" name="elixir.keyword" />
+                </starts-with>
+                <ends-with>
+                    <expression>$</expression>
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" />
+                </subscopes>
             </scope>
             
             <!-- Anonymous Function -->
             <scope name="elixir.definition.function.anonymous">
                 <symbol type="function">
-                    <context behavior="subtree" foldable="false" />
+                    <context behavior="subtree" />
                 </symbol>
                 <starts-with>
                     <expression>(fn)\s+(.*)\s+(->)</expression>
