@@ -153,6 +153,26 @@
                 <capture number="6" name="elixir.keyword" />
             </scope>
             
+            <!-- Anonymous Function -->
+            <scope name="elixir.definition.function.anonymous">
+                <symbol type="function">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>(fn)\s+(.*)\s+(->)</expression>
+                    <capture number="1" name="elixir.keyword" />
+                    <capture number="2" name="elixir.identifier.arguments" />
+                    <capture number="3" name="elixir.keyword" />
+                </starts-with>
+                <ends-with>
+                    <expression>end</expression>
+                    <capture number="0" name="elixir.keyword" />
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" />
+                </subscopes>
+            </scope>
+            
             <!-- Function Stubs -->
             <scope name="elixir.definition.function.stub">
                 <symbol type="function">
