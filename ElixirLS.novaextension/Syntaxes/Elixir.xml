@@ -20,7 +20,7 @@
             <expression>do|else|->|\{</expression>
         </increase>
         <decrease>
-            <expression>end|else|\}</expression>
+            <expression>end|else|\}\s</expression>
         </decrease>
     </indentation>
     
@@ -158,7 +158,20 @@
                     <include syntax="self" />
                 </subscopes>
             </scope>
-            
+
+            <!-- Function Stubs -->
+            <scope name="elixir.definition.function.stub">
+                <symbol type="function">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <expression>(def|defp)\s+([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)\(.*\)</expression>
+                <capture number="1" name="elixir.keyword" />
+                <capture number="2" name="elixir.identifier.function.name" />
+                <subscopes>
+                    <include syntax="self" collection="arguments" />
+                </subscopes>
+            </scope>
+
             <!-- Anonymous Function -->
             <scope name="elixir.definition.function.anonymous">
                 <symbol type="function">
@@ -178,16 +191,6 @@
                     <include syntax="self" />
                 </subscopes>
             </scope>
-            
-            <!-- Function Stubs -->
-            <scope name="elixir.definition.function.stub">
-                <symbol type="function">
-                    <context behavior="subtree" foldable="false" />
-                </symbol>
-                <expression>(def)\s+([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)\(.*\)</expression>
-                <capture number="1" name="elixir.keyword" />
-                <capture number="2" name="elixir.identifier.function.name" />
-            </scope>
 
             <!-- Functions -->
             <scope name="elixir.definition.function">
@@ -205,6 +208,34 @@
                 <subscopes>
                     <include syntax="self" collection="comments" />
                     <include syntax="self" collection="blocks" />
+                    <include syntax="self" collection="arguments" />
+                </subscopes>
+            </scope>
+        </collection>
+        
+        <!-- Arguments -->
+        <collection name="arguments">
+            <scope name="elixir.arguments">
+                <include syntax="self" collection="comments" />
+                <starts-with>
+                    <expression>\(</expression>
+                    <capture number="0" name="elixir.bracket" />
+                </starts-with>
+                <ends-with>
+                    <expression>\)</expression>
+                    <capture number="0" name="elixir.bracket" />
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" collection="comments" />
+                    <scope name="elixir.separator">
+                        <expression>,</expression>
+                    </scope>
+                    <scope name="elixir.identifier.argument.name">
+                        <symbol type="argument" />
+                        <expression>(?&lt;!\=)\b[a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*\b</expression>
+                    </scope>
+                    <include syntax="self" collection="values" />
+                    <include syntax="self" collection="syntax" />
                 </subscopes>
             </scope>
         </collection>
