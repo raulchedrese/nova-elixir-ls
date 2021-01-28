@@ -17,7 +17,7 @@
     
     <indentation>
         <increase>
-            <expression>do|else|->|\{</expression>
+            <expression>else|->|\{</expression>
         </increase>
         <decrease>
             <expression>end|else|\}\s</expression>
@@ -108,7 +108,7 @@
                     <context behavior="subtree" />
                 </symbol>
                 <starts-with>
-                    <expression>\bdo\b</expression>
+                    <expression>\bdo$</expression>
                     <capture number="0" name="elixir.keyword" />
                 </starts-with>
                 <ends-with>
@@ -178,13 +178,13 @@
                     <context behavior="subtree" />
                 </symbol>
                 <starts-with>
-                    <expression>(fn)\s+(.*)\s+(->)</expression>
+                    <expression>(fn)\s+(.*)(->)</expression>
                     <capture number="1" name="elixir.keyword" />
                     <capture number="2" name="elixir.identifier.arguments" />
                     <capture number="3" name="elixir.keyword" />
                 </starts-with>
                 <ends-with>
-                    <expression>end</expression>
+                    <expression>(end)</expression>
                     <capture number="0" name="elixir.keyword" />
                 </ends-with>
                 <subscopes>
