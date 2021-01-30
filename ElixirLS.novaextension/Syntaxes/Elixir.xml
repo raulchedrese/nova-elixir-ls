@@ -17,7 +17,7 @@
     
     <indentation>
         <increase>
-            <expression>else|->|\{</expression>
+            <expression>else|->|\{|do\b</expression>
         </increase>
         <decrease>
             <expression>end|else|\}\s</expression>
