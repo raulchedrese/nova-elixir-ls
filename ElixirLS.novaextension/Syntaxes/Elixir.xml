@@ -164,7 +164,7 @@
                 <symbol type="function">
                     <context behavior="subtree" foldable="false" />
                 </symbol>
-                <expression>(def|defp)\s+([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)\(.*\)</expression>
+                <expression>(def|defp)\s+([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)\(.*\)$</expression>
                 <capture number="1" name="elixir.keyword" />
                 <capture number="2" name="elixir.identifier.function.name" />
                 <subscopes>
@@ -178,13 +178,11 @@
                     <context behavior="subtree" />
                 </symbol>
                 <starts-with>
-                    <expression>(fn)\s+(.*)(->)</expression>
+                    <expression>(fn)\b</expression>
                     <capture number="1" name="elixir.keyword" />
-                    <capture number="2" name="elixir.identifier.arguments" />
-                    <capture number="3" name="elixir.keyword" />
                 </starts-with>
                 <ends-with>
-                    <expression>(end)</expression>
+                    <expression>(end)\b</expression>
                     <capture number="0" name="elixir.keyword" />
                 </ends-with>
                 <subscopes>
@@ -207,6 +205,7 @@
                 </ends-with>
                 <subscopes>
                     <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="arguments" />
                     <include syntax="self" collection="blocks" />
                     <include syntax="self" collection="arguments" />
                 </subscopes>
@@ -451,10 +450,40 @@
             </scope>
         </collection>
         
+        <!-- Arguments -->
+        <collection name="arguments">
+            <scope name="elixir.arguments">
+                <include syntax="self" collection="comments" />
+                <starts-with>
+                    <expression>\(</expression>
+                    <capture number="0" name="elixir.bracket" />
+                </starts-with>
+                <ends-with>
+                    <expression>\)</expression>
+                    <capture number="0" name="elixir.bracket" />
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=\b(?:function|class|if|else|while|for)\b)</expression>
+                    </cut-off>
+                    <include syntax="self" collection="comments" />
+                    <scope name="elixir.separator">
+                        <expression>,</expression>
+                    </scope>
+                    <scope name="javascript.identifier.argument.name">
+                        <symbol type="argument" />
+                        <expression>(?&lt;!\=)\b[a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*\b</expression>
+                    </scope>
+                    <include syntax="self" collection="values" />
+                    <include syntax="self" collection="syntax" />
+                </subscopes>
+            </scope>
+        </collection>
+        
         <!-- Identifiers -->
         <collection name="identifiers">
             <scope name="elixir.identifier.key">
-                <expression>([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*):</expression>
+                <expression>([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_\?]*):</expression>
             </scope>
             <scope name="elixir.identifier.type.class">
                 <expression>\b[A-Z]([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)\b</expression>
