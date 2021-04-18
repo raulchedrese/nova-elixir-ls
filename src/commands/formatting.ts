@@ -1,6 +1,5 @@
 import { lspRangeToRange } from "../novaUtils";
 import type * as lspTypes from "vscode-languageserver-protocol";
-import { folderPath } from '../uri';
 
 interface LSPFormattingResult {
   newText: string;
@@ -15,9 +14,7 @@ export const formattingCommand = (
   if (true) {
     uri = "file://" + uri.substring(uri.indexOf("/Users"));
   }
-  console.log("DOC URI");
-  console.log(editor.document.uri);
-  console.log(uri);
+
   return client
     .sendRequest("textDocument/formatting", {
       textDocument: { uri: editor.document.uri },
@@ -32,4 +29,3 @@ export const formattingCommand = (
       });
     });
 };
-//Volumes/Macintosh HD/Users/raulchedrese/projects/hack_assembler/lib/virtual_machine/
