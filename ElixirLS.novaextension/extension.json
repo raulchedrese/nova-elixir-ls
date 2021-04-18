@@ -3,7 +3,7 @@
   "name": "ElixirLS",
   "organization": "Raul Chedrese",
   "description": "Elixir Language Server support for Nova",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "categories": ["languages"],
   "repository": "https://github.com/raulchedrese/nova-elixir-ls",
   "bugs": "https://github.com/raulchedrese/nova-elixir-ls/issues",
@@ -61,12 +61,6 @@
   ],
 
   "commands": {
-    "extensions": [
-      {
-        "title": "Restart Server",
-        "command": "raulchedrese.elixir-ls.restart"
-      }
-    ],
     "editor": [
       {
         "title": "Find References",
