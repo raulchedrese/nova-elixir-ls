@@ -3,7 +3,7 @@
   "name": "ElixirLS",
   "organization": "Raul Chedrese",
   "description": "Elixir Language Server support for Nova",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "categories": ["languages"],
   "repository": "https://github.com/raulchedrese/nova-elixir-ls",
   "bugs": "https://github.com/raulchedrese/nova-elixir-ls/issues",
@@ -23,13 +23,21 @@
 
   "config": [
     {
-      "key": "elixir-ls.language-server-path",
-      "title": "Language Server Path",
-      "type": "path",
-      "placeholder": "/usr/local/bin/example"
+      "key": "elixir-ls.dialyzerEnabled",
+      "title": "Dialyzer Enabled",
+      "description": "Run ElixirLS's rapid Dialyzer when code is saved",
+      "type": "boolean",
+      "default": true
     },
     {
-      "key": "elixir-ls.format-on-save",
+      "key": "elixir-ls.mixEnv",
+      "title": "Mix Environment",
+      "description": "Mix environment to use for compilation",
+      "type": "string",
+      "default": "test"
+    },
+    {
+      "key": "elixirLS.format-on-save",
       "title": "Format on save",
       "description": "Automatically format a file on save",
       "type": "boolean",

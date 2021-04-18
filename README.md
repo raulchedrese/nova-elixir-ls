@@ -27,7 +27,7 @@ yarn install # npm install
 cd elixir-ls
 mix deps.get
 mix compile
-mix elixir_ls.release o- ../ElixirLS.novaextension/elixir-ls-release
+mix elixir_ls.release -o ../ElixirLS.novaextension/elixir-ls-release
 cd ...
 
 # bundle nova extension
