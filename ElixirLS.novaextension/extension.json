@@ -37,18 +37,11 @@
       "default": "test"
     },
     {
-      "key": "elixirLS.format-on-save",
+      "key": "elixir-ls.formatOnSave",
       "title": "Format on save",
       "description": "Automatically format a file on save",
       "type": "boolean",
       "default": false
-    },
-    {
-      "key": "elixir-ls.enable-language-server",
-      "title": "Enable Language Server",
-      "description": "Use the Elixir Language Server. This is required for many features.",
-      "type": "boolean",
-      "default": true
     }
   ],
 
