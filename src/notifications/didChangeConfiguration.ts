@@ -3,7 +3,7 @@ export function sendDidCangeConfigurationNotification(client, novaConfig) {
     settings: {
       elixirLS: {
         dialyzerEnabled: novaConfig.get("elixir-ls.dialyzerEnabled"),
-        dialyzerFormat: novaConfig.get("elixir-ls.dialyzerFormat"),
+        dialyzerFormat: "dialyzer",
         mixEnv: novaConfig.get("elixir-ls.mixEnv"),
       },
     },

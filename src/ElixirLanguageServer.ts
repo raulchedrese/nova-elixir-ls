@@ -22,7 +22,7 @@ export default class ElixirLanguageServer {
     this.stop();
   }
 
-  start(path) {
+  start(path: string) {
     if (this.languageClient) {
       this.languageClient.stop();
       nova.subscriptions.remove(this.languageClient);
@@ -68,7 +68,7 @@ export default class ElixirLanguageServer {
     }
   }
 
-  createClient(path): LanguageClient {
+  createClient(path: string): LanguageClient {
     // Use the default server path
     if (!path) {
       path = nova.extension.path + "/elixir-ls-release/language_server.sh";
