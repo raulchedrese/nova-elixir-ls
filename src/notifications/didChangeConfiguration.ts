@@ -1,4 +1,4 @@
-export function sendDidCangeConfigurationNotification(client, novaConfig) {
+export function sendDidChangeConfigurationNotification(client, novaConfig) {
   client.sendNotification("workspace/didChangeConfiguration", {
     settings: {
       elixirLS: {

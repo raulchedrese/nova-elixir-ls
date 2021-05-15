@@ -1,6 +1,6 @@
 import { findReferences } from "./commands/findReferences";
 import handleAddTextEditor from "./handlers/handleAddTextEditor";
-import { sendDidCangeConfigurationNotification } from "./notifications/didChangeConfiguration";
+import { sendDidChangeConfigurationNotification } from "./notifications/didChangeConfiguration";
 import { makeServerExecutable } from "./novaUtils";
 
 export default class ElixirLanguageServer {
@@ -41,7 +41,7 @@ export default class ElixirLanguageServer {
       nova.subscriptions.add(client);
       this.languageClient = client;
 
-      sendDidCangeConfigurationNotification(client, nova.config);
+      sendDidChangeConfigurationNotification(client, nova.config);
 
       // Find References
       nova.commands.register(
