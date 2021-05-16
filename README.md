@@ -28,13 +28,13 @@ cd elixir-ls
 mix deps.get
 mix compile
 mix elixir_ls.release -o ../ElixirLS.novaextension/elixir-ls-release
-cd ...
+cd ..
 
 # bundle nova extension
 yarn build # npm run build
 ```
 
-Finally, you have to activate this extension. To do this, click on 'Activate Project as Extension' in the menu 'Extensions'.
+Finally, you have to activate this extension. To do this, in Preferences -> General -> activate 'Show extension development items in the Extensions menu', and then click on 'Activate Project as Extension' in the menu 'Extensions'.
 
 ## Acknowledgements
 
