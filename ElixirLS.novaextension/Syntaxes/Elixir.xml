@@ -305,11 +305,20 @@
             <scope name="elixir.value.symbol">
                 <expression>:[A-Za-z][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*</expression>
             </scope>
-            <scope name="elixir.value.number.hex">
-                <expression>\b0x[a-fA-F0-9]+\b</expression>
+            <scope name="elixir.value.number.binary">
+                <expression>\b[-+]?0b[01](?:[01]|[_01])*\b</expression>
             </scope>
-            <scope name="elixir.value.number">
-                <expression>\b\-?(?:\d+(?:\.\d*)?|(?:\.\d+))\b</expression>
+            <scope name="elixir.value.number.octal">
+                <expression>\b[-+]?0o[0-7](?:[0-7]|[_0-7])*\b</expression>
+            </scope>
+            <scope name="elixir.value.number.hex">
+                <expression>\b[-+]?0x[0-9a-fA-F](?:[0-9a-fA-F]|_[0-9a-fA-F])*\b</expression>
+            </scope>
+            <scope name="elixir.value.number.float">
+                <expression>\b[-+]?\d(?:\d|_\d)*\.\d(?:\d|_\d)*(?:[eE][-+]?\d(?:\d|_\d)*)?\b</expression>
+            </scope>
+            <scope name="elixir.value.number.decimal">
+                <expression>\b[-+]?\d(?:\d|_\d)*\b</expression>
             </scope>
         </collection>
         
