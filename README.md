@@ -2,7 +2,7 @@
 
 This extension adds advanced support for Elixir features. It is powered by elixir-ls. It is currently experimental. Please report any issues you run into.
 
-## Supported Features:
+## Supported Features
 
 - Go-to-definition (working)
 - Reporting of build warnings and errors (working)
@@ -38,6 +38,6 @@ Finally, you have to activate this extension. To do this, in Preferences -> Gene
 
 ## Acknowledgements
 
-Syntax highlighting and language completions are included from https://github.com/stollcri/elixir.novaextension with permission from the maintainer.
+Syntax highlighting and language completions are adapted from https://github.com/stollcri/elixir.novaextension with permission from the maintainer.
 
 This project is heavily inspired by https://github.com/apexskier/nova-typescript
