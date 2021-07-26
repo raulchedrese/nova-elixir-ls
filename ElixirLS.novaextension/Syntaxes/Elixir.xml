@@ -241,31 +241,9 @@
         
         <!-- Keywords -->
         <collection name="keywords">
-            <scope name="elixir.keyword">
+            <scope name="elixir.keyword.construct">
                 <strings>
-                    <!-- reserved words -->
-                    <string>case</string>
-                    <string>cond</string>
-                    <string>when</string>
-                    <string>and</string>
-                    <string>or</string>
-                    <string>not</string>
-                    <string>if</string>
-                    <string>in</string>
                     <string>fn</string>
-                    <string>try</string>
-                    <string>catch</string>
-                    <string>rescue</string>
-                    <string>raise</string>
-                    <string>throw</string>
-                    <string>after</string>
-                    <string>else</string>
-                    <string>for</string>
-                    <string>with</string>
-                    <string>receive</string>
-                    <string>exit</string>
-                    <string>super</string>
-                    <!-- definitions -->
                     <string>defdelegate</string>
                     <string>defmacro</string>
                     <string>defstruct</string>
@@ -283,7 +261,45 @@
                     <!-- testing -->
                     <string>describe</string>
                     <string>test</string>
+                </strings>
+            </scope>
+            <scope name="elixir.keyword.condition">
+                <strings>
+                    <string>case</string>
+                    <string>cond</string>
+                    <string>if</string>
+                    <string>unless</string>
+                    <string>when</string>
+                    <string>else</string>
+                </strings>
+            </scope>
+            <scope name="elixir.keyword.statement">
+                <strings>
+                    <string>try</string>
+                    <string>catch</string>
+                    <string>rescue</string>
+                    <string>raise</string>
+                    <string>throw</string>
+                    <string>exit</string>
+                    <string>for</string>
+                    <string>with</string>
+                    <string>receive</string>
+                    <!-- testing -->
                     <string>assert</string>
+                </strings>
+            </scope>
+            <scope name="elixir.keyword.operator">
+                <strings>
+                    <string>and</string>
+                    <string>or</string>
+                    <string>not</string>
+                    <string>in</string>
+                    <string>after</string>
+                </strings>
+            </scope>
+            <scope name="elixir.keyword.self">
+                <strings>
+                    <string>super</string>
                 </strings>
             </scope>
         </collection>
