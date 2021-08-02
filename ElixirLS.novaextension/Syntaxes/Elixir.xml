@@ -116,7 +116,39 @@
                     <capture number="0" name="elixir.bracket" />
                 </ends-with>
                 <subscopes>
-                    <include syntax="self" />
+                    <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="definitions" />
+                    <include syntax="self" collection="keywords" />
+                    <include syntax="self" collection="blocks" />
+                    <include syntax="self" collection="imports" />
+                    <include syntax="self" collection="strings" />
+                    <include syntax="self" collection="values" />
+                    <include syntax="self" collection="identifiers" />
+                    <include syntax="self" collection="syntax" />
+                </subscopes>
+            </scope>
+            <scope name="elixir.block.inline">
+                <symbol type="block">
+                    <context behavior="subtree" />
+                </symbol>
+                <starts-with>
+                    <expression>\bdo:</expression>
+                    <capture number="0" name="elixir.bracket" />
+                </starts-with>
+                <ends-with>
+                    <expression>$</expression>
+                    <capture number="0" name="elixir.bracket" />
+                </ends-with>
+                <subscopes>
+                    <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="definitions" />
+                    <include syntax="self" collection="keywords" />
+                    <include syntax="self" collection="blocks" />
+                    <include syntax="self" collection="imports" />
+                    <include syntax="self" collection="strings" />
+                    <include syntax="self" collection="values" />
+                    <include syntax="self" collection="identifiers" />
+                    <include syntax="self" collection="syntax" />
                 </subscopes>
             </scope>
         </collection>
@@ -139,23 +171,6 @@
                 <subscopes>
                     <include syntax="self" collection="comments" />
                     <include syntax="self" collection="blocks" />
-                </subscopes>
-            </scope>
-            
-            <!-- Inline Function -->
-            <scope name="elixir.definition.function.inline">
-                <starts-with>
-                    <expression>(def|defp)\s+([a-zA-Z_][a-zA-Z0-9_\!\?]*)(\(.+\)).*,\s+(do):</expression>
-                    <capture number="1" name="elixir.keyword.construct" />
-                    <capture number="2" name="elixir.identifier.function.name" />
-                    <capture number="3" name="elixir.identifier.arguments" />
-                    <capture number="4" name="elixir.keyword" />
-                </starts-with>
-                <ends-with>
-                    <expression>$</expression>
-                </ends-with>
-                <subscopes>
-                    <include syntax="self" />
                 </subscopes>
             </scope>
 
@@ -204,8 +219,33 @@
                     <expression>(?&lt;=end)</expression>
                 </ends-with>
                 <subscopes>
+                    <cut-off>
+                        <expression>(?=do:)</expression>
+                    </cut-off>
                     <include syntax="self" collection="comments" />
+                    <include syntax="self" collection="blocks" />
                     <include syntax="self" collection="arguments" />
+                </subscopes>
+            </scope>
+            
+            <!-- Macros -->
+            <scope name="elixir.definition.function.macro">
+                <symbol type="function">
+                    <context behavior="subtree" foldable="false" />
+                </symbol>
+                <starts-with>
+                    <expression>(defmacro)\s+([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)</expression>
+                    <capture number="1" name="elixir.keyword.construct" />
+                    <capture number="2" name="elixir.identifier.function.name" />
+                </starts-with>
+                <ends-with>
+                    <expression>(?&lt;=end)</expression>
+                </ends-with>
+                <subscopes>
+                    <cut-off>
+                        <expression>(?=do:)</expression>
+                    </cut-off>
+                    <include syntax="self" collection="comments" />
                     <include syntax="self" collection="blocks" />
                     <include syntax="self" collection="arguments" />
                 </subscopes>
@@ -245,7 +285,6 @@
                 <strings>
                     <string>fn</string>
                     <string>defdelegate</string>
-                    <string>defmacro</string>
                     <string>defstruct</string>
                     <string>defprotocol</string>
                     <string>defimpl</string>
