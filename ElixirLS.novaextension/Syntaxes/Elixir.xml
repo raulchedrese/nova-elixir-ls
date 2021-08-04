@@ -174,18 +174,6 @@
                 </subscopes>
             </scope>
 
-            <!-- Function Stubs -->
-            <scope name="elixir.definition.function.stub">
-                <symbol type="function">
-                    <context behavior="subtree" foldable="false" />
-                </symbol>
-                <expression>(def|defp)\s+([a-zA-Z_][A-Za-zÀ-ÖØ-öø-ÿ0-9_]*)\(.*\)$</expression>
-                <capture number="1" name="elixir.keyword.construct" />
-                <capture number="2" name="elixir.identifier.function.name" />
-                <subscopes>
-                    <include syntax="self" collection="arguments" />
-                </subscopes>
-            </scope>
 
             <!-- Anonymous Function -->
             <scope name="elixir.definition.function.anonymous">
@@ -216,7 +204,7 @@
                     <capture number="2" name="elixir.identifier.function.name" />
                 </starts-with>
                 <ends-with>
-                    <expression>(?&lt;=end)</expression>
+                    <expression>(?&lt;=end)|$</expression>
                 </ends-with>
                 <subscopes>
                     <cut-off>
