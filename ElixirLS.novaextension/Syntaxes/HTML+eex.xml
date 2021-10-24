@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <syntax name="html+eex">
 	<meta>
-		<name>HTML (Elixir)</name>
+		<name>HTML (HEEx)</name>
 		<type>markup</type>
-		<preferred-file-extension>html.eex</preferred-file-extension>
+		<preferred-file-extension>html.heex</preferred-file-extension>
 		<parent>html</parent>
 	</meta>
 	
 	<detectors>
-		<extension priority="1.0">html.eex,html.leex</extension>
+		<extension priority="1.0">html.heex</extension>
 	</detectors>
 	
 	<indentation>
