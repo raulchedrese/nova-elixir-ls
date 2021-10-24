@@ -109,11 +109,11 @@
                 </symbol>
                 <starts-with>
                     <expression>\bdo$</expression>
-                    <capture number="0" name="elixir.bracket" />
+                    <capture number="0" name="elixir.keyword" />
                 </starts-with>
                 <ends-with>
                     <expression>\bend\b</expression>
-                    <capture number="0" name="elixir.bracket" />
+                    <capture number="0" name="elixir.keyword" />
                 </ends-with>
                 <subscopes>
                     <include syntax="self" collection="comments" />
