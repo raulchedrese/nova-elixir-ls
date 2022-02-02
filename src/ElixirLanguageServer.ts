@@ -25,7 +25,7 @@ export default class ElixirLanguageServer {
   start(path: string) {
     if (this.languageClient) {
       this.languageClient.stop();
-      nova.subscriptions.remove(this.languageClient);
+      nova.subscriptions.remove(this.languageClient as unknown as Disposable);
     }
 
     makeServerExecutable();
@@ -38,7 +38,7 @@ export default class ElixirLanguageServer {
       client.start();
 
       // Add the client to the subscriptions to be cleaned up
-      nova.subscriptions.add(client);
+      nova.subscriptions.add(client as unknown as Disposable);
       this.languageClient = client;
 
       sendDidChangeConfigurationNotification(client, nova.config);
@@ -90,7 +90,7 @@ export default class ElixirLanguageServer {
   stop() {
     if (this.languageClient) {
       this.languageClient.stop();
-      nova.subscriptions.remove(this.languageClient);
+      nova.subscriptions.remove(this.languageClient as unknown as Disposable);
       this.mainDisposable.dispose();
       this.languageClient = null;
     }

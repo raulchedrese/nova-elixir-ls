@@ -43,6 +43,12 @@
       "description": "Automatically format a file on save",
       "type": "boolean",
       "default": false
+    },
+    {
+      "key": "elixir-ls.projectDir",
+      "title": "Project Directory",
+      "description": "Add configuration option for when your Mix project is in a subdirectory instead of the workspace root.",
+      "type": "string",
     }
   ],
 
