@@ -23,12 +23,7 @@ export function sendDidChangeConfigurationNotification(client: LanguageClient, n
   
   client.sendNotification("workspace/didChangeConfiguration", {
     settings: {
-      elixirLS: {
-        dialyzerEnabled: novaConfig.get("elixir-ls.dialyzerEnabled"),
-        dialyzerFormat: "dialyzer",
-        mixEnv: novaConfig.get("elixir-ls.mixEnv"),
-        projectDir: novaConfig.get("elixir-ls.projectDir") || null
-      },
-    },
+      elixirLS,
+    }
   });
 }
