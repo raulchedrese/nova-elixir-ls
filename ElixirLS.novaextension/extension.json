@@ -48,7 +48,7 @@
       "key": "elixir-ls.projectDir",
       "title": "Project Directory",
       "description": "Add configuration option for when your Mix project is in a subdirectory instead of the workspace root.",
-      "type": "string",
+      "type": "string"
     }
   ],
 
