@@ -25,7 +25,7 @@ export default class ElixirLanguageServer {
   start(path: string) {
     if (this.languageClient) {
       this.languageClient.stop();
-      nova.subscriptions.remove(this.languageClient as unknown as Disposable);
+      nova.subscriptions.remove(this.languageClient);
     }
 
     makeServerExecutable();
@@ -38,7 +38,7 @@ export default class ElixirLanguageServer {
       client.start();
 
       // Add the client to the subscriptions to be cleaned up
-      nova.subscriptions.add(client as unknown as Disposable);
+      nova.subscriptions.add(client);
       this.languageClient = client;
 
       sendDidChangeConfigurationNotification(client, nova.config);
@@ -56,7 +56,7 @@ export default class ElixirLanguageServer {
         handleAddTextEditor(
           this.mainDisposable,
           client,
-          nova.config.get("elixir-ls.formatOnSave") === 'true'
+          Boolean(nova.config.get("elixir-ls.formatOnSave"))
         )
       );
     } catch (err) {
@@ -90,7 +90,7 @@ export default class ElixirLanguageServer {
   stop() {
     if (this.languageClient) {
       this.languageClient.stop();
-      nova.subscriptions.remove(this.languageClient as unknown as Disposable);
+      nova.subscriptions.remove(this.languageClient);
       this.mainDisposable.dispose();
       this.languageClient = null;
     }
