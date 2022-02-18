@@ -56,7 +56,7 @@ export default class ElixirLanguageServer {
         handleAddTextEditor(
           this.mainDisposable,
           client,
-          nova.config.get("elixir-ls.formatOnSave") === 'true'
+          Boolean(nova.config.get("elixir-ls.formatOnSave"))
         )
       );
     } catch (err) {
