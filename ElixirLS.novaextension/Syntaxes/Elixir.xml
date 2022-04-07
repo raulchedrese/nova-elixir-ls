@@ -59,6 +59,7 @@
     </scopes>
     
     <collections>
+        <!-- Embedded Heex -->
         <collection name="heex">
             <scope name="heex">
                 <starts-with>
