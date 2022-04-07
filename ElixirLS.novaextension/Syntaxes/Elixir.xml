@@ -46,6 +46,7 @@
     </surrounding-pairs>
     
     <scopes>
+        <include syntax="self" collection="heex" />
         <include syntax="self" collection="comments" />
         <include syntax="self" collection="definitions" />
         <include syntax="self" collection="keywords" />
@@ -58,6 +59,24 @@
     </scopes>
     
     <collections>
+        <collection name="heex">
+            <scope name="heex">
+                <starts-with>
+                    <expression>~H"""</expression>
+                    <capture number="0" name="eex.tag.framework.expression.start" />
+                </starts-with>
+                <ends-with>
+                    <expression>"""</expression>
+                    <capture number="0" name="eex.tag.framework.expression.end" />
+                </ends-with>
+                <subsyntax name="html+eex">
+                    <cut-off>
+                        <expression>"""</expression>
+                    </cut-off>
+                </subsyntax>
+            </scope>
+        </collection>
+    
         <!-- Comments -->
         <collection name="comments">
             <scope name="elixir.comment.single" spell-check="true">
@@ -116,6 +135,7 @@
                     <capture number="0" name="elixir.keyword" />
                 </ends-with>
                 <subscopes>
+                    <include syntax="self" collection="heex" />
                     <include syntax="self" collection="comments" />
                     <include syntax="self" collection="definitions" />
                     <include syntax="self" collection="keywords" />
