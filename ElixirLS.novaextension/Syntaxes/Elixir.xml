@@ -9,6 +9,7 @@
     
     <tree-sitter>
         <highlights />
+        <folds />
     </tree-sitter>
 
     <detectors>
