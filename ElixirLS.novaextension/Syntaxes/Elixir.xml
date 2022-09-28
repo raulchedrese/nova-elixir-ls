@@ -7,6 +7,10 @@
         <scriptable shebang="#!/usr/bin/env elixir" />
     </meta>
     
+    <tree-sitter>
+        <highlights />
+    </tree-sitter>
+
     <detectors>
         <extension priority="1.0">ex,exs</extension>
         <filename priority="1.0">mix.lock</filename>
