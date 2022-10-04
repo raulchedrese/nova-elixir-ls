@@ -7,6 +7,10 @@
 		<parent>html</parent>
 	</meta>
 	
+	<tree-sitter language="heex">
+		<highlights path="heex/highlights.scm" />
+	</tree-sitter>
+	
 	<detectors>
 		<extension priority="1.0">html.heex</extension>
 	</detectors>
