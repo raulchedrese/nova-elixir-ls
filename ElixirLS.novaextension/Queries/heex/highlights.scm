@@ -39,7 +39,7 @@
 ] @tag
 
 ; HEEx attributes are highlighted as HTML attributes
-(attribute_name) @attribute
+(attribute_name) @tag.attribute
 
 ; HEEx special attributes are highlighted as keywords
 (special_attribute_name) @keyword
@@ -52,7 +52,7 @@
 ; HEEx components are highlighted as Elixir modules and functions
 (component_name
   [
-    (module) @module
-    (function) @function
+    (module) @identifier.type
+    (function) @identifier.function
     "." @punctuation.delimiter
   ])
