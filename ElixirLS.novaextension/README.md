@@ -12,8 +12,3 @@ This extension adds advanced support for Elixir features. It is powered by elixi
 - Format code on save (experimental)
 - Find references (experimental)
 
-## Acknowledgements
-
-Syntax highlighting and language completions are included from https://github.com/stollcri/elixir.novaextension with permission from the maintainer.
-
-This project is heavily inspired by https://github.com/apexskier/nova-typescript
