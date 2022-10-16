@@ -9,10 +9,11 @@
 	
 	<tree-sitter language="heex">
 		<highlights path="heex/highlights.scm" />
+		<injections path="heex/injections.scm" />
 	</tree-sitter>
 	
 	<detectors>
-		<extension priority="1.0">html.heex</extension>
+		<extension priority="1.0">html.heex,heex</extension>
 	</detectors>
 	
 	<indentation>
