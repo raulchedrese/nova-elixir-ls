@@ -7,7 +7,7 @@
 	</meta>
 	
 	<detectors>
-		<extension priority="0.5">eex,leex,heex</extension>
+		<extension priority="0.5">eex</extension>
 		<match-content priority="0.5" lines="10">&lt;%.*?%&gt;</match-content>
 	</detectors>
 	

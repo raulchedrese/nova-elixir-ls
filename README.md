@@ -35,9 +35,3 @@ yarn build # npm run build
 ```
 
 Finally, you have to activate this extension. To do this, in Preferences -> General -> activate 'Show extension development items in the Extensions menu', and then click on 'Activate Project as Extension' in the menu 'Extensions'.
-
-## Acknowledgements
-
-Syntax highlighting and language completions are adapted from https://github.com/stollcri/elixir.novaextension with permission from the maintainer.
-
-This project is heavily inspired by https://github.com/apexskier/nova-typescript
