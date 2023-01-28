@@ -1,6 +1,10 @@
 # Change Log
 
-## Unreleased
+## 0.4.2: 28 Jan 2023
+
+### Improvements:
+
+- Updated ElixirLS to version [v0.13.0](https://github.com/elixir-lsp/elixir-ls/releases/tag/v0.13.0)
 
 ## 0.4.0: 16 Oct 2022
 
