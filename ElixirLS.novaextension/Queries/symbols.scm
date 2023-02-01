@@ -4,7 +4,7 @@
 (call
   target: (identifier) @ignore
   (arguments (alias) @name)
-  (#match? @ignore "^(defmodule|defprotocol)$")) @definition.module
+  (#match? @ignore "^(defmodule|defprotocol)$") (#set! role class)) @subtree
 
 ; * functions/macros
 (call
@@ -20,7 +20,8 @@
         left: (call target: (identifier) @name)
         operator: "when")
     ])
-  (#match? @ignore "^(def|defp|defdelegate|defguard|defguardp|defmacro|defmacrop|defn|defnp)$")) @definition.function
+  (#match? @ignore "^(def|defp|defdelegate|defguard|defguardp|defmacro|defmacrop|defn|defnp)$")
+  (#set! role function)) @subtree
 
 ; References
 
