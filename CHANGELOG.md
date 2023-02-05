@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.4.3: 28 Jan 2023
+## 0.4.3: 05 Feb 2023
 
 - @eahanson added support for Tree-sitter based symbols. Symbols will now appear in the Symbols sidebar when using Nova 10 or newer.
 
