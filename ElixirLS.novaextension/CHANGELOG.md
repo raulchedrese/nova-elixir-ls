@@ -1,8 +1,14 @@
-## 0.4.1: 8 Dec 2022
+# Change Log
+
+## 0.4.3: 28 Jan 2023
+
+- @eahanson added support for Tree-sitter based symbols. Symbols will now appear in the Symbols sidebar when using Nova 10 or newer.
+
+## 0.4.2: 28 Jan 2023
 
 ### Improvements:
 
-- Updated ElixirLS to version [v0.12.0](https://github.com/elixir-lsp/elixir-ls/releases/tag/v0.12.0).
+- Updated ElixirLS to version [v0.13.0](https://github.com/elixir-lsp/elixir-ls/releases/tag/v0.13.0)
 
 ## 0.4.0: 16 Oct 2022
 
