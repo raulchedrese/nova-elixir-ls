@@ -11,6 +11,7 @@
         <highlights />
         <folds />
         <injections />
+        <symbols />
     </tree-sitter>
 
     <detectors>
