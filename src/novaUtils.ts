@@ -56,7 +56,7 @@ export function jumpToRange(
   });
 }
 
-export const makeServerExecutable = () => {
+export const makeServerExecutable = (path: string) => {
   if (!path || path === "") {
     // using a custom path, no permissions will be changed
     return
