@@ -28,7 +28,7 @@ export default class ElixirLanguageServer {
       nova.subscriptions.remove(this.languageClient);
     }
 
-    makeServerExecutable();
+    makeServerExecutable(path);
 
     const client = this.createClient(path);
 
