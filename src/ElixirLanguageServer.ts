@@ -70,9 +70,10 @@ export default class ElixirLanguageServer {
 
   createClient(path: string): LanguageClient {
     // Use the default server path
-    if (!path) {
+    if (!path || path === "") {
       path = nova.extension.path + "/elixir-ls-release/language_server.sh";
     }
+    console.info("Using language server at %s", path)
     const serverOptions = {
       path: path,
     };

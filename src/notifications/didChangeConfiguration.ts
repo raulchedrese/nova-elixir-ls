@@ -3,6 +3,7 @@ interface ElixirLS {
   dialyzerFormat: string
   mixEnv: string
   projectDir?: string
+  languageServerPath?: string
 }
 
 export function sendDidChangeConfigurationNotification(
@@ -14,6 +15,7 @@ export function sendDidChangeConfigurationNotification(
     dialyzerFormat: "dialyzer",
     mixEnv: String(novaConfig.get("elixir-ls.mixEnv")),
     projectDir: String(novaConfig.get("elixir-ls.projectDir")),
+    languageServerPath: String(novaConfig.get("elixir-ls.language-server-path"))
   }
 
   client.sendNotification("workspace/didChangeConfiguration", {
