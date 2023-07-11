@@ -28,7 +28,10 @@ export default class ElixirLanguageServer {
       nova.subscriptions.remove(this.languageClient);
     }
 
-    makeServerExecutable(path);
+    if (!path || path === "") {
+      // using built-in language server
+      makeServerExecutable();
+    }
 
     const client = this.createClient(path);
 
@@ -73,7 +76,7 @@ export default class ElixirLanguageServer {
     if (!path || path === "") {
       path = nova.extension.path + "/elixir-ls-release/language_server.sh";
     }
-    console.info("Using language server at %s", path)
+    console.info("Using language server at %s", path);
     const serverOptions = {
       path: path,
     };

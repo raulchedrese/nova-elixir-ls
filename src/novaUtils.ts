@@ -56,11 +56,7 @@ export function jumpToRange(
   });
 }
 
-export const makeServerExecutable = (path: string) => {
-  if (!path || path === "") {
-    // using a custom path, no permissions will be changed
-    return
-  }
+export const makeServerExecutable = () => {
   const serverProcess = new Process("/usr/bin/env", {
     args: [
       "chmod",
