@@ -49,7 +49,14 @@
       "description": "Add configuration option for when your Mix project is in a subdirectory instead of the workspace root.",
       "type": "string",
       "default": "./"
-    }
+    },
+    {
+      "key": "elixir-ls.language-server-path",
+      "title": "Language Server",
+      "description": "Path to a custom language server e.g. /home/user/.local/bin/elixir/language_server.sh. Leave empty to use the default.",
+      "type": "string",
+      "default": ""
+    },
   ],
 
   "sidebars": [
