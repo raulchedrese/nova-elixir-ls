@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.4.6 24 Sept 2023
+
+### Improvements:
+
+- @kkostov added an setting to set a path to a custom language server instead of the one bundled with the extension. [PR](https://github.com/raulchedrese/nova-elixir-ls/pull/29)
+- Updated ElixirLS to version [v0.16.0](https://github.com/elixir-lsp/elixir-ls/releases/tag/v0.16.0)
+
 ## 0.4.5 8 July 2023
 
 ### Improvements:
