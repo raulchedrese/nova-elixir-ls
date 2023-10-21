@@ -1,24 +1,28 @@
 ; HEEx delimiters
 [
-  "%>"
-  "--%>"
   "-->"
   "/>"
   "<!"
   "<!--"
   "<"
-  "<%!--"
-  "<%"
   "<%#"
   "<%%="
-  "<%="
   "</"
   "</:"
   "<:"
+  "<."
   ">"
   "{"
   "}"
 ] @punctuation.bracket
+
+[
+  "<%"
+  "<%="
+  "<%!--"
+  "%>"
+"--%>"
+] @tag.framework
 
 ; HEEx operators are highlighted as such
 "=" @operator
@@ -34,12 +38,12 @@
 
 ; HEEx tags and slots are highlighted as HTML
 [
- (tag_name) 
- (slot_name) 
-] @tag
+ (tag_name)
+ (slot_name)
+] @tag.name
 
 ; HEEx attributes are highlighted as HTML attributes
-(attribute_name) @tag.attribute
+(attribute_name) @tag.attribute.name
 
 ; HEEx special attributes are highlighted as keywords
 (special_attribute_name) @keyword
@@ -47,7 +51,7 @@
 [
   (attribute_value)
   (quoted_attribute_value)
-] @string
+] @tag.attribute.value
 
 ; HEEx components are highlighted as Elixir modules and functions
 (component_name
