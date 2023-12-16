@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.4.7 16 Dec 2023
+
+### Improvements:
+
+- @TeriyakiBomb improved the tree-sitter query tags for better syntax highlighting. [PR](https://github.com/raulchedrese/nova-elixir-ls/pull/33)
+- Updated ElixirLS to version [v0.17.10](https://github.com/elixir-lsp/elixir-ls/releases/tag/v0.17.10)
+
+
 ## 0.4.6 24 Sept 2023
 
 ### Improvements:
