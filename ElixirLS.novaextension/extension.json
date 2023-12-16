@@ -56,7 +56,7 @@
       "description": "Path to a custom language server e.g. /home/user/.local/bin/elixir/language_server.sh. Leave empty to use the default.",
       "type": "string",
       "default": ""
-    },
+    }
   ],
 
   "sidebars": [
