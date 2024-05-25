@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.4.9 25 May 2024
+
+### Improvements:
+
+- Updated ElixirLS to version [v0.21.3](https://github.com/elixir-lsp/elixir-ls/releases/tag/v0.21.3)
+- @TeriyakiBomb improved the tree-sitter queries for documentation attributes resulting in improved syntax highlighting. [PR](https://github.com/raulchedrese/nova-elixir-ls/pull/33)
+
 ## 0.4.8 8 Feb 2024
 
 ### Improvements:
