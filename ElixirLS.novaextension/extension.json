@@ -3,7 +3,6 @@
   "name": "ElixirLS",
   "organization": "Raul Chedrese",
   "description": "Elixir Language Server support for Nova",
-  "version": "0.4.10",
   "version": "0.5.0",
   "categories": ["languages"],
   "repository": "https://github.com/raulchedrese/nova-elixir-ls",
