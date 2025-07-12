@@ -23,13 +23,6 @@ pwd # should look like /somewhere/on/your/drive/in/nova-elixir-ls
 # install necessary project dependencies
 yarn install # npm install
 
-# compile elixir-ls
-cd elixir-ls
-mix deps.get
-mix compile
-mix elixir_ls.release -o ../ElixirLS.novaextension/elixir-ls-release
-cd ..
-
 # bundle nova extension
 yarn build # npm run build
 ```
