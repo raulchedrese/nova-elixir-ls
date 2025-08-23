@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.5.1 31 Dec 2024
+## 0.5.1 11 July 2025
 
 ### Improvements:
 
