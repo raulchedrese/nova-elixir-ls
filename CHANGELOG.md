@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.6.0 26 May 2026
+
+### Improvements:
+
+- Added experimental support for the [Expert](https://github.com/expert-lsp/expert) language server as an alternative to ElixirLS. ElixirLS remains the default. Select Expert in the extension settings to switch, or run the new **Install Expert Language Server** command from the Extensions menu to download and install the matching binary automatically.
+- Language servers are now launched with the workspace directory as their working directory, so tool-version managers like mise and asdf can detect the project's `mise.toml` / `.tool-versions` and activate the right Elixir version.
+
+### Fixes:
+
+- Stopped re-registering the Find References command and `onDidAddTextEditor` listener on every language server restart.
+- `formatOnSave` now takes effect immediately instead of requiring a reload.
+
 ## 0.5.1 11 July 2025
 
 ### Improvements:
