@@ -6,6 +6,29 @@ import { findExpertBinary, installExpert } from "./expert";
 
 type ServerKind = "elixirLS" | "expert";
 
+// Nova's LanguageClient API has no `cwd` option and spawns the server with cwd
+// "/". That breaks tool-version managers (mise, asdf) that key off the project
+// directory, and breaks Expert which writes a log file under cwd. Wrap the
+// invocation in /bin/sh -c so we can cd before exec'ing the real server.
+function shellQuote(s: string): string {
+  return `'${s.replace(/'/g, "'\\''")}'`;
+}
+
+function serverOptionsForCwd(
+  path: string,
+  args: string[],
+  cwd: string | null
+) {
+  if (!cwd) {
+    return { path, args };
+  }
+  const parts = [shellQuote(path), ...args.map(shellQuote)];
+  return {
+    path: "/bin/sh",
+    args: ["-c", `cd ${shellQuote(cwd)} && exec ${parts.join(" ")}`],
+  };
+}
+
 export default class ElixirLanguageServer {
   languageClient: LanguageClient | null = null;
   mainDisposable: CompositeDisposable;
@@ -94,12 +117,13 @@ export default class ElixirLanguageServer {
       path = nova.extension.path + "/elixir-ls-release/language_server.sh";
     }
 
-    console.info("Using ElixirLS at %s", path);
+    const workspacePath = nova.workspace.path;
+    console.info("Using ElixirLS at %s (cwd: %s)", path, workspacePath || "/");
 
     return new LanguageClient(
       "elixir-ls-langserver",
       "Elixir Language Server",
-      { path },
+      serverOptionsForCwd(path, [], workspacePath),
       { syntaxes: ["elixir"] }
     );
   }
@@ -113,10 +137,9 @@ export default class ElixirLanguageServer {
       return null;
     }
 
-    // Expert calls File.cwd!() at startup and creates a .expert/ dir there for
-    // its log file. Nova spawns the language server with cwd "/" by default,
-    // which fails with EROFS. The LanguageClient API has no cwd option, so we
-    // wrap in /bin/sh and cd into the workspace before exec'ing Expert.
+    // Expert calls File.cwd!() at startup and creates a .expert/ dir there.
+    // Nova spawns language servers with cwd "/", which fails with EROFS, so
+    // Expert can't function without a real workspace path.
     const workspacePath = nova.workspace.path;
     if (!workspacePath) {
       console.warn("Expert requires an open workspace; no workspace path found.");
@@ -128,16 +151,10 @@ export default class ElixirLanguageServer {
 
     console.info("Using Expert at %s (cwd: %s)", path, workspacePath);
 
-    const quoted = (s: string) => `'${s.replace(/'/g, "'\\''")}'`;
-    const cmd = `cd ${quoted(workspacePath)} && exec ${quoted(path)} --stdio`;
-
     return new LanguageClient(
       "expert-langserver",
       "Expert Language Server",
-      {
-        path: "/bin/sh",
-        args: ["-c", cmd],
-      },
+      serverOptionsForCwd(path, ["--stdio"], workspacePath),
       { syntaxes: ["elixir"] }
     );
   }

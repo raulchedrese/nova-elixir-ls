@@ -56,6 +56,24 @@
       "description": "Path to a custom language server e.g. /home/user/.local/bin/elixir/language_server.sh. Leave empty to use the default.",
       "type": "string",
       "default": ""
+    },
+    {
+      "key": "elixir-ls.languageServer",
+      "title": "Language Server (Experimental)",
+      "description": "Which language server to use. ElixirLS is the default; Expert is experimental and requires a separately downloaded binary (see 'Expert Binary Path').",
+      "type": "enum",
+      "values": [
+        ["elixirLS", "ElixirLS (default)"],
+        ["expert", "Expert (experimental)"]
+      ],
+      "default": "elixirLS"
+    },
+    {
+      "key": "elixir-ls.expert-path",
+      "title": "Expert Binary Path (Experimental)",
+      "description": "Optional absolute path to the Expert language server binary. Leave empty to let the extension auto-detect Expert (it checks ~/.local/bin, Homebrew, and the location it installs to). Run the 'Install Expert Language Server' command to install it automatically.",
+      "type": "string",
+      "default": ""
     }
   ],
 
@@ -82,6 +100,12 @@
         "filters": {
           "syntaxes": ["elixir", "ex", "exs", "eex"]
         }
+      }
+    ],
+    "extensions": [
+      {
+        "title": "Install Expert Language Server",
+        "command": "raulchedrese.elixir-ls.installExpert"
       }
     ]
   }
